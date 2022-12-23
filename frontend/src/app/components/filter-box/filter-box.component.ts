@@ -1,6 +1,10 @@
 import {Component,  Input, OnInit } from '@angular/core';
 import {DishService} from "../../services/dish/dish.service";
 import {FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import {DishCuisineService} from "../../services/dish-cuisine/dish-cuisine.service";
+import {DishCuisine} from "../../models/DishCuisine";
+import {DishCategoryService} from "../../services/dish-category/dish-category.service";
+import {DishCategory} from "../../models/DishCategory";
 
 @Component({
   selector: 'app-filter-box',
@@ -9,7 +13,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 })
 export class FilterBoxComponent implements OnInit {
 
-  cuisineTypes: string[] = [];
+  dishCuisines: DishCuisine[] = [];
 
   minPrice: number;
 
@@ -17,7 +21,7 @@ export class FilterBoxComponent implements OnInit {
 
   ratings = [1, 2, 3, 4, 5];
 
-  dishTypes: string[]
+  dishCategories: DishCategory[]
 
   filterForm: FormGroup;
 
@@ -31,7 +35,8 @@ export class FilterBoxComponent implements OnInit {
 
   @Input() searchedMaxPrice: number[];
 
-  constructor(private formBuilder: FormBuilder, private dishService: DishService) {
+  constructor(private formBuilder: FormBuilder, private dishService: DishService, private dishCuisineService: DishCuisineService,
+              private dishCategoryService: DishCategoryService) {
   }
 
   ngOnInit() {
@@ -44,8 +49,8 @@ export class FilterBoxComponent implements OnInit {
     });
 
 
-    this.dishService.getCuisineTypes().subscribe(cuisineTypes => {
-      this.cuisineTypes = cuisineTypes.filter(this.onlyUnique);
+    this.dishCuisineService.findAll().subscribe(dishCuisines => {
+      this.dishCuisines = dishCuisines;
       this.addCuisineTypes();
     });
     this.dishService.getMinPrice().subscribe(minPrice => {
@@ -57,8 +62,8 @@ export class FilterBoxComponent implements OnInit {
       this.searchedMaxPrice.push(this.maxPrice);
 
     });
-    this.dishService.getDishTypes().subscribe(dishTypes => {
-      this.dishTypes = dishTypes.filter(this.onlyUnique);
+    this.dishCategoryService.findAll().subscribe(dishCategories => {
+      this.dishCategories = dishCategories;
       this.addDishTypes()
     });
     this.addRatings();
@@ -74,7 +79,7 @@ export class FilterBoxComponent implements OnInit {
   }
 
   private addCuisineTypes() {
-    this.cuisineTypes.forEach(() => this.cuisineTypesFormArray.push(new FormControl(false)))
+    this.dishCuisines.forEach(() => this.cuisineTypesFormArray.push(new FormControl(false)))
   }
 
   get dishTypesFormArray() {
@@ -82,7 +87,7 @@ export class FilterBoxComponent implements OnInit {
   }
 
   private addDishTypes() {
-    this.dishTypes.forEach(() => this.dishTypesFormArray.push(new FormControl(false)))
+    this.dishCategories.forEach(() => this.dishTypesFormArray.push(new FormControl(false)))
   }
 
   get ratingsFormArray() {
@@ -95,9 +100,9 @@ export class FilterBoxComponent implements OnInit {
 
   cuisineTypeCheckboxChanged(cuisineTypeIndex: number, e: Event) {
     if (e) {
-      this.checkedCuisineTypes.push(this.cuisineTypes[cuisineTypeIndex]);
+      this.checkedCuisineTypes.push(this.dishCuisines[cuisineTypeIndex].name);
     } else {
-      const index = this.checkedCuisineTypes.indexOf(this.cuisineTypes[cuisineTypeIndex], 0);
+      const index = this.checkedCuisineTypes.indexOf(this.dishCuisines[cuisineTypeIndex].name, 0);
       if (index > -1) {
         this.checkedCuisineTypes.splice(index, 1)
       }
@@ -106,9 +111,9 @@ export class FilterBoxComponent implements OnInit {
 
   dishTypeCheckboxChanged(dishTypeIndex: number, e: Event) {
     if (e) {
-      this.checkedDishTypes.push(this.dishTypes[dishTypeIndex]);
+      this.checkedDishTypes.push(this.dishCategories[dishTypeIndex].name);
     } else {
-      const index = this.checkedDishTypes.indexOf(this.dishTypes[dishTypeIndex], 0);
+      const index = this.checkedDishTypes.indexOf(this.dishCategories[dishTypeIndex].name, 0);
       if (index > -1) {
         this.checkedDishTypes.splice(index, 1)
       }

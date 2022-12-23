@@ -42,10 +42,11 @@ export class DishListComponent implements OnInit {
   }
 
   getDishes(): void {
-    this.dishService.getDishes().subscribe(dishes => {
+    this.dishService.findAll().subscribe(dishes => {
+      console.log(dishes);
         this.dishes = dishes;
         dishes.forEach(dish => {
-          dish.available = dish.amount;
+          dish.available = dish.quantity;
           if (dish.price > this.mostExpensiveValue) {
             this.mostExpensiveValue = dish.price;
           }
@@ -71,7 +72,7 @@ export class DishListComponent implements OnInit {
 
   public delete(dish: Dish) {
     this.dishes = this.dishes.filter(d => d !== dish);
-    this.dishService.deleteDish(dish.id).subscribe();
+    this.dishService.deleteDish(dish.dishId).subscribe();
   }
 
 }

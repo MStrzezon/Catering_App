@@ -16,13 +16,13 @@ export class CartComponent implements OnInit {
   total = 0;
 
   static validateCount(productInOrder: Dish) {
-    const max = productInOrder.available;
-    if (productInOrder.amount > max) {
-      productInOrder.amount = max;
-    } else if (productInOrder.amount < 1) {
-      productInOrder.amount = 1;
+    const max = productInOrder.price;
+    if (productInOrder.quantity > max) {
+      productInOrder.quantity = max;
+    } else if (productInOrder.quantity < 1) {
+      productInOrder.quantity = 1;
     }
-    console.log(productInOrder.amount);
+    console.log(productInOrder.quantity);
   }
 
   ngOnInit() {
@@ -33,16 +33,16 @@ export class CartComponent implements OnInit {
 
   ngAfterContentChecked() {
     this.total = this.productInOrders.reduce(
-      (prev, cur) => prev + cur.amount * cur.price, 0);
+      (prev, cur) => prev + cur.quantity * cur.price, 0);
   }
 
   addOne(productInOrder: Dish) {
-    productInOrder.amount++;
+    productInOrder.quantity++;
     CartComponent.validateCount(productInOrder);
   }
 
   minusOne(productInOrder: Dish) {
-    productInOrder.amount--;
+    productInOrder.quantity--;
     CartComponent.validateCount(productInOrder);
   }
 
@@ -52,7 +52,7 @@ export class CartComponent implements OnInit {
 
 
   remove(productInOrder: Dish) {
-    this.cartService.remove(productInOrder.id).subscribe(
+    this.cartService.remove(productInOrder.dishId).subscribe(
       () => {
         this.productInOrders = this.productInOrders.filter(e => e.name !== productInOrder.name);
         console.log('Cart: ' + this.productInOrders);

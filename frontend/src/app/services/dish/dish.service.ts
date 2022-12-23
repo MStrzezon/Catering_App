@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Dish} from "../../models/Dish";
-import {distinct,  map, max, Observable } from "rxjs";
+import { map, max, Observable } from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
@@ -8,7 +8,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class DishService {
 
-  private dishesUrl = 'api/dishes';
+  private dishesUrl = 'http://localhost:8080/dishes';
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,14 +17,8 @@ export class DishService {
   constructor(private http: HttpClient) {
   }
 
-  getDishes(): Observable<Dish[]> {
+  findAll(): Observable<Dish[]> {
     return this.http.get<Dish[]>(this.dishesUrl);
-  }
-
-  getCuisineTypes(): Observable<string[]> {
-    return this.http.get<Dish[]>(this.dishesUrl).pipe(
-      map((dishes: Dish[]) => dishes.map(dish => dish.cuisine_type))
-    )
   }
 
   getMinPrice(): Observable<number[]> {
@@ -38,13 +32,6 @@ export class DishService {
     return this.http.get<Dish[]>(this.dishesUrl).pipe(
       map((dishes: Dish[]) => dishes.map(dish => dish.price)),
       max()
-    )
-  }
-
-  getDishTypes(): Observable<string[]> {
-    return this.http.get<Dish[]>(this.dishesUrl).pipe(
-      map((dishes: Dish[]) => dishes.map(dish => dish.dish_type)),
-      distinct()
     )
   }
 

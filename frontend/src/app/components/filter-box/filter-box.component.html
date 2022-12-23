@@ -3,14 +3,14 @@
     <h2>Rodzaje kuchni:</h2>
     <div *ngFor="let cuisineType of cuisineTypesFormArray.controls; let i=index">
       <input id="cuisineType-{{ i }}" type="checkbox" (ngModelChange)="cuisineTypeCheckboxChanged(i, $event)" [formControlName]="i">
-      <label for="cuisineType-{{ i }}">{{cuisineTypes[i]}}</label>
+      <label for="cuisineType-{{ i }}">{{dishCuisines[i].name}}</label>
     </div>
   </div>
   <div formArrayName="dishTypes">
     <h2>Rodzaje dań:</h2>
-    <div *ngFor="let dishType of dishTypesFormArray.controls; let i=index">
+    <div *ngFor="let dishCategory of dishTypesFormArray.controls; let i=index">
       <input id="dishType-{{ i }}" type="checkbox" (ngModelChange)="dishTypeCheckboxChanged(i, $event)" [formControlName]="i">
-      <label for="dishType-{{ i }}">{{dishTypes[i]}}</label>
+      <label for="dishType-{{ i }}">{{dishCategories[i].name}}</label>
     </div>
   </div>
   <div formArrayName="ratings">

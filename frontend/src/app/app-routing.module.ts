@@ -5,7 +5,7 @@ import {CartComponent} from "./components/cart/cart.component";
 import {CreateDishComponent} from "./components/create-dish/create-dish.component";
 
 const routes: Routes = [
-  { path: '', component: DishListComponent },
+  { path: 'menu', component: DishListComponent },
   { path: 'create-dish', component: CreateDishComponent },
   { path: 'cart', component: CartComponent }
 ];

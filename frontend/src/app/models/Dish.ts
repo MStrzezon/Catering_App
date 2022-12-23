@@ -1,20 +1,21 @@
+import {Ingredient} from "./Ingredient";
+import {Rating} from "./Rating";
+import {Image} from "./Image";
+import {DishCuisine} from "./DishCuisine";
+import {DishCategory} from "./DishCategory";
+
 export class Dish {
 
-  id: number;
+  dishId: number;
   name: string;
-  cuisine_type: string;
-
-  dish_type: string;
-
-  ingredients: string[];
-
-  amount: number;
-
-  available: number;
-
+  quantity: number;
   price: number;
-
+  ingredients: Ingredient[];
+  dishCategory: DishCategory;
+  dishCuisine: DishCuisine;
+  ratings: Rating[];
+  images: Image[];
   description: string;
 
-  image: string;
+  available: number;
 }

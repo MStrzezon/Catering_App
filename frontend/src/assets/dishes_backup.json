@@ -1,160 +1,321 @@
 [
   {
     "name": "Pizza prosciutto",
-    "kitchen_type": "włoska",
-    "dish_type": "danie główne",
+    "quantity": 8,
+    "price": 6.0,
     "ingredients": [
-      "sos pomidorowy",
-      "mozarella",
-      "szynka"
+      {
+        "name": "sos pomidorowy"
+      },
+      {
+        "name": "mozarella"
+      },
+      {
+        "name": "szynka"
+      }
     ],
-    "amount": 8,
-    "price": 6.00,
-    "description": "Pyszna pizza z włoskimi dodatkami. Szynka parmeńska, pomidorki koktajlowe, świeża rukola i starty parmezan to idealny wybór. Pizza dla osób ceniących sobie dobrą włoską kuchnię. Gotowa pizza podana w towarzystwie oliwy z oliwek będzie idealnym dopełnieniem romantycznej kolacji.",
-    "image": "https://2.bp.blogspot.com/-60_KIOCYBT0/Ve4EvTOmOEI/AAAAAAAAEOc/AMcolUbJihA/s1600/pizza%2Bna%2Blato.DSC_0668.jpg"
+    "dishCategory": {
+      "name": "danie główne"
+    },
+    "dishCuisine": {
+      "name": "włoska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://2.bp.blogspot.com/-60_KIOCYBT0/Ve4EvTOmOEI/AAAAAAAAEOc/AMcolUbJihA/s1600/pizza%2Bna%2Blato.DSC_0668.jpg"
+      }
+    ],
+    "description": "Pyszna pizza z włoskimi dodatkami. Szynka parmeńska, pomidorki koktajlowe, świeża rukola i starty parmezan to idealny wybór. Pizza dla osób ceniących sobie dobrą włoską kuchnię. Gotowa pizza podana w towarzystwie oliwy z oliwek będzie idealnym dopełnieniem romantycznej kolacji."
   },
   {
     "name": "Pizza margherita",
-    "kitchen_type": "włoska",
-    "dish_type": "pizza",
+    "quantity": 5,
+    "price": 4.50,
     "ingredients": [
-      "sos pomidorowy",
-      "mozarella"
+      {
+        "name": "sos pomidorowy"
+      },
+      {
+        "name": "mozarella"
+      },
+      {
+        "name": "szynka"
+      }
     ],
-    "amount": 3,
-    "price": 4.00,
-    "description": "Pizza z sosem pomidorowym i tartym serem mozzarella.",
-    "image": "https://images.pexels.com/photos/6940997/pexels-photo-6940997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "pizza"
+    },
+    "dishCuisine": {
+      "name": "włoska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/6940997/pexels-photo-6940997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Pizza z sosem pomidorowym i tartym serem mozzarella."
   },
   {
     "name": "Spaghetti bolognese",
-    "kitchen_type": "włoska",
-    "dish_type": "pizza",
+    "quantity": 4,
+    "price": 4.00,
     "ingredients": [
-      "makaron spaghetti",
-      "wołowina",
-      "parmezan"
+      {
+        "name": "makaron spaghetti"
+      },
+      {
+        "name": "wołowina"
+      },
+      {
+        "name": "parmezan"
+      }
     ],
-    "amount": 5,
-    "price": 4.50,
-    "description": "Prawdziwy klasyk kuchni włoskiej",
-    "image": "https://images.pexels.com/photos/4349774/pexels-photo-4349774.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "danie główne"
+    },
+    "dishCuisine": {
+      "name": "włoska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/4349774/pexels-photo-4349774.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Prawdziwy klasyk kuchni włoskiej"
   },
   {
     "name": "Żurek",
-    "kitchen_type": "polska",
-    "dish_type": "zupa",
+    "quantity": 7,
+    "price": 1.00,
     "ingredients": [
-      "kiełbasa",
-      "jajko"
+      {
+        "name": "kiełbasa"
+      },
+      {
+        "name": "jajko"
+      }
     ],
-    "amount": 7,
-    "price": 1,
-    "description": "Zurek z białą kiełbasą i jajkiem",
-    "image": "https://images.pexels.com/photos/1707270/pexels-photo-1707270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "zupa"
+    },
+    "dishCuisine": {
+      "name": "polska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/1707270/pexels-photo-1707270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Zurek z białą kiełbasą i jajkiem"
   },
   {
     "name": "Rosół",
-    "kitchen_type": "polska",
-    "dish_type": "zupa",
+    "quantity": 11,
+    "price": 1.00,
     "ingredients": [
-      "makaron",
-      "marchew",
-      "pietruszka"
+      {
+        "name": "makaron"
+      },
+      {
+        "name": "marchew"
+      },
+      {
+        "name": "pietruszka"
+      }
     ],
-    "amount": 11,
-    "price": 1,
-    "description": "Rosół z kury podawany z makaronem",
-    "image": "https://images.pexels.com/photos/4210858/pexels-photo-4210858.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "zupa"
+    },
+    "dishCuisine": {
+      "name": "polska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/4210858/pexels-photo-4210858.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Rosół z kury podawany z makaronem"
   },
   {
     "name": "Frytki",
-    "kitchen_type": "międzynarodowa",
-    "dish_type": "dodatek",
+    "quantity": 9,
+    "price": 5.50,
     "ingredients": [
-      "frytki"
+      {
+        "name": "frytki"
+      }
     ],
-    "amount": 21,
-    "price": 2,
-    "description": "Frytki smażone na oleju",
-    "image": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "dodatek"
+    },
+    "dishCuisine": {
+      "name": "międzynarodowa"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Frytki smażone na oleju"
   },
   {
     "name": "Kotlet schabowy",
-    "kitchen_type": "polska",
-    "dish_type": "danie główne",
+    "quantity": 11,
+    "price": 5.00,
     "ingredients": [
-      "ziemniaki gotowane",
-      "kapusta zasmażana"
+      {
+        "name": "ziemniaki gotowane"
+      },
+      {
+        "name": "kapusta zasmażana"
+      }
     ],
-    "amount": 9,
-    "price": 5.50,
-    "description": "Kotlet schabowy z ziemniaczkami i pyszną kapustą",
-    "image": "https://images.pexels.com/photos/4210802/pexels-photo-4210802.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "danie główne"
+    },
+    "dishCuisine": {
+      "name": "polska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/4210802/pexels-photo-4210802.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Kotlet schabowy z ziemniaczkami i pyszną kapustą"
   },
   {
     "name": "Sałatka z kaczką",
-    "kitchen_type": "francuska",
-    "dish_type": "sałatka",
-    "ingredients": [
-      "sos śliwkowy"
-    ],
-    "amount": 11,
+    "quantity": 11,
     "price": 5.00,
-    "description": "Sałatka z wędzoną kaczką, dressingiem i orzechami",
-    "image": "https://i2.wp.com/fitfoodstories.com/wp-content/uploads/2019/12/DSC_3641.jpg"
+    "ingredients": [
+      {
+        "name": "sos śliwkowy"
+      }
+    ],
+    "dishCategory": {
+      "name": "sałatka"
+    },
+    "dishCuisine": {
+      "name": "francuska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://i2.wp.com/fitfoodstories.com/wp-content/uploads/2019/12/DSC_3641.jpg"
+      }
+    ],
+    "description": "Sałatka z wędzoną kaczką, dressingiem i orzechami"
   },
   {
     "name": "Kluski śląskie",
-    "kitchen_type": "polska",
-    "dish_type": "dodatek",
+    "quantity": 4,
+    "price": 3.00,
     "ingredients": [
     ],
-    "amount": 4,
-    "price": 3.00,
-    "description": "Kluski śląskie, które świetnie się komponują z daniami polskimi",
-    "image": "https://images.pexels.com/photos/4202387/pexels-photo-4202387.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "dishCategory": {
+      "name": "dodatek"
+    },
+    "dishCuisine": {
+      "name": "polska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://2.bp.blogspot.com/-60_KIOCYBT0/Ve4EvTOmOEI/AAAAAAAAEOc/AMcolUbJihA/s1600/pizza%2Bna%2Blato.DSC_0668.jpg"
+      }
+    ],
+    "description": "Kluski śląskie, które świetnie się komponują z daniami polskimi"
   },
   {
     "name": "Wegańskie curry",
-    "kitchen_type": "indyjska",
-    "dish_type": "wegański",
-    "ingredients": [
-      "cukinia",
-      "soczewica czerwona"
-    ],
-    "amount": 5,
+    "quantity": 5,
     "price": 5.00,
-    "description": "Wegańskie rozgrzewające curry pełne warzyw",
-    "image": "https://e-przepisykulinarne.pl/wp-content/uploads/2014/09/curry_wege.jpg"
+    "ingredients": [
+      {
+        "name": "cukinia"
+      },
+      {
+        "name": "soczewica czerwona"
+      }
+    ],
+    "dishCategory": {
+      "name": "wegański"
+    },
+    "dishCuisine": {
+      "name": "indyjska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://e-przepisykulinarne.pl/wp-content/uploads/2014/09/curry_wege.jpg"
+      }
+    ],
+    "description": "Wegańskie rozgrzewające curry pełne warzyw"
   },
   {
     "name": "Sałatka francuska",
-    "kitchen_type": "francuska",
-    "dish_type": "sałatka",
-    "ingredients": [
-      "sałata",
-      "granat",
-      "cebula"
-    ],
-    "amount": 5,
+    "quantity": 5,
     "price": 2.00,
-    "description": "Sałatka z granatem",
-    "image": "https://images.pexels.com/photos/806361/pexels-photo-806361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "ingredients": [
+      {
+        "name": "cebula"
+      },
+      {
+        "name": "sałata"
+      },
+      {
+        "name": "granat"
+      }
+    ],
+    "dishCategory": {
+      "name": "sałatka"
+    },
+    "dishCuisine": {
+      "name": "francuska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://images.pexels.com/photos/806361/pexels-photo-806361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      }
+    ],
+    "description": "Sałatka z granatem"
   },
   {
     "name": "Krewetki",
-    "kitchen_type": "francuska",
-    "dish_type": "przystawka",
-    "ingredients": [
-      "krewetki",
-      "białe wino",
-      "szpinak"
-    ],
-    "amount": 10,
+    "quantity": 10,
     "price": 3.00,
-    "description": "Krewetki w sosie z białego wina",
-    "image": "https://nietylkopasta.pl/wp-content/uploads/2012/02/krewetkiwsmietanie2.jpg"
+    "ingredients": [
+      {
+        "name": "białe wino"
+      },
+      {
+        "name": "krewetki"
+      },
+      {
+        "name": "szpinak"
+      }
+    ],
+    "dishCategory": {
+      "name": "przystawka"
+    },
+    "dishCuisine": {
+      "name": "francuska"
+    },
+    "ratings": [],
+    "images": [
+      {
+        "imageUrl": "https://nietylkopasta.pl/wp-content/uploads/2012/02/krewetkiwsmietanie2.jpg"
+      }
+    ],
+    "description": "Krewetki w sosie z białego wina"
   }
 ]
 

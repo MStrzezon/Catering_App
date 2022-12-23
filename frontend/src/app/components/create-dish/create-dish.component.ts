@@ -43,15 +43,15 @@ export class CreateDishComponent implements OnInit {
   onSubmit(): void {
     let dish = new Dish();
     dish.name = this.dishForm.get('name')?.value;
-    dish.cuisine_type = this.dishForm.get('cuisine_type')?.value;
-    dish.dish_type = this.dishForm.get('dish_type')?.value;
+    dish.dishCuisine = this.dishForm.get('cuisine_type')?.value;
+    dish.dishCategory = this.dishForm.get('dish_type')?.value;
     dish.ingredients = this.dishForm.get('ingredients')?.value;
-    dish.amount = this.dishForm.get('amount')?.value;
+    dish.quantity = this.dishForm.get('amount')?.value;
     dish.price = this.dishForm.get('price')?.value;
     dish.description = this.dishForm.get('description')?.value;
-    dish.image = this.dishForm.get('image')?.value;
+    dish.images.push(this.dishForm.get('image')?.value);
     this.dishService.addDish(dish).subscribe();
 
-    this.dishService.getDishes().subscribe(dishes => console.log(dishes));
+    this.dishService.findAll().subscribe(dishes => console.log(dishes));
   }
 }
