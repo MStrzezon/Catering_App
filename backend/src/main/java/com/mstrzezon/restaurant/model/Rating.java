@@ -1,5 +1,6 @@
 package com.mstrzezon.restaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,5 +21,6 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name = "dish_id", nullable = false)
+    @JsonIgnore
     private Dish dish;
 }

@@ -1,8 +1,10 @@
 package com.mstrzezon.restaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 @Entity(name = "image")
 @Table(name = "images")
@@ -19,6 +21,7 @@ public class Image {
     private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "dish_id", nullable = false)
+    @JoinColumn(name = "dish_id")
+    @JsonIgnore
     private Dish dish;
 }

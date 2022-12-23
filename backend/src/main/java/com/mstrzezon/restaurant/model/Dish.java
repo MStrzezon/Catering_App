@@ -31,24 +31,24 @@ public class Dish {
     @ManyToMany(cascade=CascadeType.PERSIST)
     private Set<Ingredient> ingredients;
 
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private Set<DishCategory> dishCategories;
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "dish_category_id", nullable = false)
+    private DishCategory dishCategory;
 
     @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "dish_cuisine_id", nullable = false)
     private DishCuisine dishCuisine;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.MERGE)
     private Set<Image> images;
 
     @Column(length = 1000)
     private String description;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.PERSIST)
     @JsonIgnore
     private Set<CartItem> cartItems;
 }

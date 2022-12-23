@@ -1,15 +1,10 @@
 package com.mstrzezon.restaurant.service;
 
-import com.mstrzezon.restaurant.model.Dish;
-import com.mstrzezon.restaurant.model.DishCategory;
-import com.mstrzezon.restaurant.model.DishCuisine;
-import com.mstrzezon.restaurant.model.Ingredient;
-import com.mstrzezon.restaurant.repository.DishCategoryRepository;
-import com.mstrzezon.restaurant.repository.DishCuisineRepository;
-import com.mstrzezon.restaurant.repository.DishRepository;
-import com.mstrzezon.restaurant.repository.IngredientRepository;
+import com.mstrzezon.restaurant.model.*;
+import com.mstrzezon.restaurant.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,21 +19,27 @@ public class DishService {
 
     private final DishCuisineRepository dishCuisineRepository;
 
-    DishService(DishRepository dishRepository, IngredientRepository ingredientRepository, DishCategoryRepository dishCategoryRepository, DishCuisineRepository dishCuisineRepository) {
+    private final ImageRepository imageRepository;
+
+    DishService(DishRepository dishRepository, IngredientRepository ingredientRepository, DishCategoryRepository dishCategoryRepository,
+                DishCuisineRepository dishCuisineRepository, ImageRepository imageRepository) {
         this.dishRepository = dishRepository;
         this.ingredientRepository = ingredientRepository;
         this.dishCategoryRepository = dishCategoryRepository;
         this.dishCuisineRepository = dishCuisineRepository;
+        this.imageRepository = imageRepository;
     }
 
     public Dish save(Dish newDish) {
         Set<Ingredient> ingredients = newDish.getIngredients();
-        Set<DishCategory> dishCategories = newDish.getDishCategories();
+        DishCategory dishCategory = newDish.getDishCategory();
         DishCuisine dishCuisine = newDish.getDishCuisine();
+        Set<Image> images = newDish.getImages();
 
         newDish.setIngredients(ingredientsToSave(ingredients));
-        newDish.setDishCategories(dishCategoriesToSave(dishCategories));
+        newDish.setDishCategory(dishCategoryToSave(dishCategory));
         newDish.setDishCuisine(dishCuisineToSave(dishCuisine));
+        newDish.setImages(imagesToSave(images, newDish));
         return dishRepository.save(newDish);
     }
 
@@ -49,15 +50,24 @@ public class DishService {
                 .collect(Collectors.toSet());
     }
 
-    public Set<DishCategory> dishCategoriesToSave(Set<DishCategory> dishCategories) {
-        return dishCategories.stream()
-                .map(dishCategory -> dishCategoryRepository.findByName(dishCategory.getName()).isEmpty() ?
-                        dishCategoryRepository.save(dishCategory) : dishCategoryRepository.findByName(dishCategory.getName()).get(0))
-                .collect(Collectors.toSet());
+    public DishCategory dishCategoryToSave(DishCategory dishCategory) {
+        return dishCategoryRepository.findByName(dishCategory.getName()).isEmpty() ?
+                dishCategoryRepository.save(dishCategory) : dishCategoryRepository.findByName(dishCategory.getName()).get(0);
     }
 
     public DishCuisine dishCuisineToSave(DishCuisine dishCuisine) {
         return dishCuisineRepository.findByName(dishCuisine.getName()).isEmpty() ?
                 dishCuisineRepository.save(dishCuisine) : dishCuisineRepository.findByName(dishCuisine.getName()).get(0);
+    }
+
+    public Set<Image> imagesToSave(Set<Image> images, Dish newDish) {
+        Set<Image> listImages = new HashSet<>();
+        for (Image image : images) {
+            Image mergedImage = imageRepository.save(image);
+            mergedImage.setDish(newDish);
+            listImages.add(mergedImage);
+        }
+
+        return listImages;
     }
 }

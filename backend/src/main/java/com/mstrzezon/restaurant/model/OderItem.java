@@ -1,11 +1,15 @@
 package com.mstrzezon.restaurant.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity(name = "order_item")
 @Table(name = "order_items")
+@Getter
+@Setter
 public class OderItem {
 
     @Id

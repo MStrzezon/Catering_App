@@ -30,6 +30,13 @@ public class DishController {
         return service.save(newDish);
     }
 
+    @PostMapping("/dishes-many")
+    void newDish(@RequestBody List<Dish> newDish) {
+        for (Dish dish : newDish) {
+            service.save(dish);
+        }
+    }
+
     @GetMapping("/dishes/{id}")
     Dish one(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
@@ -43,7 +50,7 @@ public class DishController {
                     dish.setQuantity(newDish.getQuantity());
                     dish.setPrice(newDish.getPrice());
                     dish.setIngredients(newDish.getIngredients());
-                    dish.setDishCategories(newDish.getDishCategories());
+                    dish.setDishCategory(newDish.getDishCategory());
                     dish.setDishCuisine(newDish.getDishCuisine());
                     dish.setRatings(newDish.getRatings());
                     dish.setImages(newDish.getImages());

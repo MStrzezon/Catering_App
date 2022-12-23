@@ -1,9 +1,13 @@
 package com.mstrzezon.restaurant.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "cart_item")
 @Table(name = "cart_items")
+@Getter
+@Setter
 public class CartItem {
 
     @Id
@@ -17,7 +21,7 @@ public class CartItem {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 }

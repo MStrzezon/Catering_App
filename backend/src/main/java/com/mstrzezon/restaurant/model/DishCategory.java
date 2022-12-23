@@ -21,7 +21,7 @@ public class DishCategory {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "dishCategories")
+    @OneToMany(mappedBy = "dishCategory")
     @JsonIgnore
     private List<Dish> dish;
 }
