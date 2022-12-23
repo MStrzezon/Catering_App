@@ -1,0 +1,106 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: serif;
+  font-size: 20px;
+}
+
+.row {
+  width: 100%;
+}
+
+.dishes {
+  display: flex;
+}
+
+.dish-item {
+  position: relative;
+  height: 300px;
+  margin: 10px;
+  overflow: hidden;
+  box-shadow: 0 30px 40px rgba(0,0,0,.1);
+}
+
+.warning {
+  background: rgb(255,89,0);
+  background: radial-gradient(circle, rgba(255,89,0,0.6138830532212884) 0%, rgba(255,115,115,0.8575805322128851) 100%);
+  color: white;
+}
+
+.most-expensive {
+  background: rgb(0,177,5);
+  background: radial-gradient(circle, rgba(0,177,5,1) 0%, rgba(118,255,115,0.8575805322128851) 100%);
+}
+
+.the-cheapest {
+  background: rgb(177,0,0);
+  background: radial-gradient(circle, rgba(177,0,0,1) 0%, rgba(255,0,0,0.8575805322128851) 100%);
+}
+
+.dish-item .trash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  background-color: red;
+  border-radius: 5px;
+  padding: 3px 8px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.dish-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.dish-item h1 {
+  margin: 5px;
+}
+
+.dish-item p {
+  margin: 5px;
+}
+
+.dish-item .alert {
+  color: red;
+  font-size: 13px;
+  margin: 0;
+  display: none;
+}
+
+.dish-item .order-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dish-item .amount {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dish-item .amount * {
+  margin-right: 5px;
+  margin-left: 5px;
+
+}
+
+.dish-item .hidden {
+  visibility: hidden;
+}
+
+.dish-item .add {
+  cursor: pointer;
+}
+
+.dish-item .remove {
+  cursor: pointer;
+}
+
+.dish-item .price {
+  margin-right: 10px;
+}
+

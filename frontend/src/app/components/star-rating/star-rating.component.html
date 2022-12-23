@@ -1,0 +1,7 @@
+<div class="flex-container">
+  <ng-container *ngFor="let star of stars">
+    <app-star [starId]="star" [rating]="hoverState || rating" (enter)="enter(star)" (leave)="leave()"
+              (bigClick)="updateRating(star)">
+    </app-star>
+  </ng-container>
+</div>

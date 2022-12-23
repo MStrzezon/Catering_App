@@ -1,0 +1,45 @@
+<div class="container">
+  <form [formGroup]="dishForm" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label for="name">Name: </label>
+      <input id="name" type="text" formControlName="name" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="cuisine_type">Cuisine type: </label>
+      <input id="cuisine_type" type="text" formControlName="cuisine_type" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="dish_type">Dish type: </label>
+      <input id="dish_type" type="text" formControlName="dish_type" class="form-control">
+    </div>
+    <div class="mb-3">
+      <div formArrayName="ingredients">
+        <button type="button" (click)="addIngredient()">+ Add ingredient</button>
+        <div *ngFor="let ingredient of ingredients.controls; let i=index">
+          <div class="mb-3">
+            <label for="ingredient-{{ i }}">Ingredient:</label>
+            <input id="ingredient-{{ i }}" type="text" [formControlName]="i">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="amount">Amount: </label>
+      <input id="amount" type="number" formControlName="amount" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="price">Price: </label>
+      <input id="price" type="number" formControlName="price" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="description">Description: </label>
+      <textarea id="description" rows="3" formControlName="description" required class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-control-file" for="image">Wybierz zdjęcie </label>
+      <input id="image" type="file" accept=".jpg,.png" formControlName="image" class="form-control-file">
+    </div>
+    <button type="submit" [disabled]="!dishForm.valid">Submit</button>
+  </form>
+</div>
