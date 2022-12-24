@@ -21,6 +21,10 @@ export class DishService {
     return this.http.get<Dish[]>(this.dishesUrl);
   }
 
+  createDish(dish: Dish): Observable<Dish> {
+    return this.http.post<Dish>(this.dishesUrl, dish, this.httpOptions);
+  }
+
   getMinPrice(): Observable<number[]> {
     return this.http.get<Dish[]>(this.dishesUrl).pipe(
       map((dishes: Dish[]) => dishes.map(dish => dish.price)),
@@ -35,9 +39,7 @@ export class DishService {
     )
   }
 
-  addDish(dish: Dish): Observable<Dish> {
-    return this.http.post<Dish>(this.dishesUrl, dish, this.httpOptions);
-  }
+
 
   deleteDish(id: number): Observable<Dish> {
     const url = `${this.dishesUrl}/${id}`;

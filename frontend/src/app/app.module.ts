@@ -17,6 +17,10 @@ import { CartComponent } from './components/cart/cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from "@angular/material/card";
+import {MatListModule} from "@angular/material/list";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -32,15 +36,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CartComponent,
     NavbarComponent
   ],
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        FontAwesomeModule,
-        FormsModule,
-        AppRoutingModule,
-        NgbModule,
-    ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    FormsModule,
+    AppRoutingModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

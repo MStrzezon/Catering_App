@@ -1,17 +1,45 @@
 <div class="container">
   <form [formGroup]="dishForm" (ngSubmit)="onSubmit()">
 
-    <div class="mb-3">
+    <div class="mb-2">
       <label for="name">Name: </label>
-      <input id="name" type="text" formControlName="name" class="form-control">
+      <input id="name" type="text" formControlName="name" class="form-control" required>
+      <div *ngIf="name.invalid && (name.dirty || name.touched || submitted)"
+           class="alert alert-danger">
+        <div *ngIf="name.errors?.['required']">
+          Nazwa dania jest wymagana.
+        </div>
+      </div>
     </div>
     <div class="mb-3">
-      <label for="cuisine_type">Cuisine type: </label>
-      <input id="cuisine_type" type="text" formControlName="cuisine_type" class="form-control">
+      <label>Cuisine type: </label>
+      <select class="form-select" aria-label="Default select example" formControlName="dishCuisine" required>
+        <option selected>--wybierz--</option>
+        <option *ngFor="let dishCuisine of dishCuisines" ngValue="dishCuisine">
+          {{dishCuisine.name}}
+        </option>
+      </select>
+      <div *ngIf="dishCuisine.invalid && (dishCuisine.dirty || dishCuisine.touched || submitted)"
+           class="alert alert-danger">
+        <div *ngIf="dishCuisine.errors?.['required']">
+          Rodzaj kuchni jest wymagany.
+        </div>
+      </div>
     </div>
     <div class="mb-3">
-      <label for="dish_type">Dish type: </label>
-      <input id="dish_type" type="text" formControlName="dish_type" class="form-control">
+      <label>Dish type: </label>
+      <select class="form-select" aria-label="Default select example" formControlName="dishCategory" required>
+        <option selected>--wybierz--</option>
+        <option *ngFor="let dishCategory of dishCategories" ngValue="dishCategory">
+          {{dishCategory.name}}
+        </option>
+      </select>
+      <div *ngIf="dishCategory.invalid && (dishCategory.dirty || dishCategory.touched || submitted)"
+           class="alert alert-danger">
+        <div *ngIf="dishCategory.errors?.['required']">
+          Kategoria dania jest wymagana.
+        </div>
+      </div>
     </div>
     <div class="mb-3">
       <div formArrayName="ingredients">
@@ -19,27 +47,61 @@
         <div *ngFor="let ingredient of ingredients.controls; let i=index">
           <div class="mb-3">
             <label for="ingredient-{{ i }}">Ingredient:</label>
-            <input id="ingredient-{{ i }}" type="text" [formControlName]="i">
+            <input id="ingredient-{{ i }}" type="text" [formControlName]="i" required>
+            <button (click)="removeIngredient(i)">X</button>
+          </div>
+          <div *ngIf="ingredients.controls[i].invalid && (ingredients.controls[i].dirty ||ingredients.controls[i].touched || submitted)"
+               class="alert alert-danger">
+            <div *ngIf="ingredients.controls[i].errors?.['required']">
+              Pole nie może być puste.
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="mb-3">
-      <label for="amount">Amount: </label>
-      <input id="amount" type="number" formControlName="amount" class="form-control">
+      <label for="quantity">Ilość: </label>
+      <input id="quantity" type="number" formControlName="quantity" class="form-control" required>
+      <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched || submitted)"
+           class="alert alert-danger">
+        <div *ngIf="quantity.errors?.['required']">
+          Podanie ilości dań jest wymagane.
+        </div>
+        <div *ngIf="quantity.errors?.['pattern']">
+          Ilość powinna być liczbą całkowitą
+        </div>
+      </div>
     </div>
     <div class="mb-3">
-      <label for="price">Price: </label>
-      <input id="price" type="number" formControlName="price" class="form-control">
+      <label for="price">Cena: </label>
+      <input id="price" type="number" formControlName="price" class="form-control" required>
+      <div *ngIf="price.invalid && (price.dirty || price.touched || submitted)"
+           class="alert alert-danger">
+        <div *ngIf="price.errors?.['required']">
+          Podanie ceny dania jest wymagane.
+        </div>
+        <div *ngIf="price.errors?.['pattern']">
+          Niepoprawny format danych
+        </div>
+      </div>
     </div>
     <div class="mb-3">
-      <label for="description">Description: </label>
+      <label for="description">Opis dania: </label>
       <textarea id="description" rows="3" formControlName="description" required class="form-control"></textarea>
+      <div *ngIf="description.invalid && (description.dirty || description.touched || submitted)"
+           class="alert alert-danger">
+        <div *ngIf="description.errors?.['required']">
+          Opis dania jest wymagany.
+        </div>
+        <div *ngIf="description.errors?.['maxLength']">
+          Maksymalna długość opisu to 255 znaków
+        </div>
+      </div>
     </div>
     <div class="mb-3">
       <label class="form-control-file" for="image">Wybierz zdjęcie </label>
       <input id="image" type="file" accept=".jpg,.png" formControlName="image" class="form-control-file">
     </div>
-    <button type="submit" [disabled]="!dishForm.valid">Submit</button>
+    <button type="submit">Submit</button>
   </form>
 </div>
