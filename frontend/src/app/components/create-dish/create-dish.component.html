@@ -15,7 +15,7 @@
       <label>Cuisine type: </label>
       <select class="form-select" aria-label="Default select example" formControlName="dishCuisine" required>
         <option selected>--wybierz--</option>
-        <option *ngFor="let dishCuisine of dishCuisines" ngValue="dishCuisine">
+        <option *ngFor="let dishCuisine of dishCuisines" ngValue="{{dishCuisine.name}}">
           {{dishCuisine.name}}
         </option>
       </select>
@@ -30,7 +30,7 @@
       <label>Dish type: </label>
       <select class="form-select" aria-label="Default select example" formControlName="dishCategory" required>
         <option selected>--wybierz--</option>
-        <option *ngFor="let dishCategory of dishCategories" ngValue="dishCategory">
+        <option *ngFor="let dishCategory of dishCategories" ngValue="{{dishCategory.name}}">
           {{dishCategory.name}}
         </option>
       </select>

@@ -17,5 +17,5 @@ export class Dish {
   images: Image[];
   description: string;
 
-  available: number;
+  reserved: number;
 }

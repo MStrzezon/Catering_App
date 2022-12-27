@@ -18,15 +18,15 @@
   <tr *ngFor="let productInOrder of productInOrders">
     <th class="align-middle" scope="row">
       <a><img height="100px"
-              src="{{productInOrder.images[0].imageUrl}}"
-              alt="{{productInOrder.name}}"></a>
+              src="{{productInOrder.dish.images[0].imageUrl}}"
+              alt="{{productInOrder.dish.name}}"></a>
     </th>
-    <td class="align-middle"><a>{{productInOrder.name}}</a></td>
-    <td class="align-middle">{{productInOrder.price | currency}}</td>
+    <td class="align-middle"><a>{{productInOrder.dish.name}}</a></td>
+    <td class="align-middle">{{productInOrder.dish.price | currency}}</td>
 
     <td class="align-middle">
       <a (click)="minusOne(productInOrder)"><i class="fa fa-minus"></i></a>
-      <input min="1" id="{{productInOrder.dishId}}"
+      <input min="1" id="{{productInOrder.dish.dishId}}"
              [max]=productInOrder.quantity
              [(ngModel)]="productInOrder.quantity"
              (change)="onChange(productInOrder)"
@@ -37,7 +37,7 @@
       <a (click)="addOne(productInOrder)"> <i class="fa fa-plus"></i></a>
     </td>
 
-    <td class="align-middle">{{productInOrder.price * productInOrder.quantity|currency}}</td>
+    <td class="align-middle">{{productInOrder.dish.price * productInOrder.quantity|currency}}</td>
     <td class="align-middle">
       <a (click)="remove(productInOrder)">Remove</a>
     </td>

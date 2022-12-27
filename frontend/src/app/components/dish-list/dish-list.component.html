@@ -8,9 +8,9 @@
       <div class="row">
         <div class="col-5 col-md-4 col-lg-3"
              *ngFor="let dish of (dishes | filterPipe: searchCuisineTypes: searchMinPrice[0]: searchMaxPrice[0]: searchRatings: searchDishesTypes)">
-          <div class="dish-item" [class.warning]="dish.available <= 3"
-               [class.most-expensive]="mostExpensiveValue === dish.price && dish.available > 3"
-               [class.the-cheapest]="cheapestValue === dish.price && dish.available > 3">
+          <div class="dish-item" [class.warning]="dish.quantity <= 3"
+               [class.most-expensive]="mostExpensiveValue === dish.price && dish.quantity > 3"
+               [class.the-cheapest]="cheapestValue === dish.price && dish.quantity > 3">
             <fa-icon class="trash" [icon]="faTrash" (click)="delete(dish)"></fa-icon>
             <img src="{{dish.images[0].imageUrl}}}" alt="Dish image">
             <p class="alert">Chwilowy brak dostępnych dań</p>
@@ -18,9 +18,9 @@
             <p>{{dish.dishCuisine.name | uppercase}}</p>
             <div class="order-info">
               <div class="amount">
-                <fa-icon class="add" [class.hidden]="dish.available === 0" [icon]="faPlus"
+                <fa-icon class="add" [class.hidden]="dish.quantity === 0" [icon]="faPlus"
                          (click)="addItem(dish)"></fa-icon>
-                <p>{{dish.available}}</p>
+                <p>{{dish.quantity}}</p>
                 <fa-icon class="remove" [icon]="faMinus" (click)="removeItem(dish)"></fa-icon>
               </div>
               <div class="price">
@@ -28,7 +28,9 @@
                 <fa-icon [icon]="faDollar"></fa-icon>
               </div>
             </div>
-            <app-star-rating></app-star-rating>
+            <div>
+              Liczba zarezerwowanych dań: {{dish.reserved}}
+            </div>
           </div>
         </div>
       </div>

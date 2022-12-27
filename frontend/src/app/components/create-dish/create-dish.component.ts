@@ -7,6 +7,8 @@ import {DishCuisineService} from "../../services/dish-cuisine/dish-cuisine.servi
 import {DishCuisine} from "../../models/DishCuisine";
 import {DishCategoryService} from "../../services/dish-category/dish-category.service";
 import {DishCategory} from "../../models/DishCategory";
+import {Image} from "../../models/Image";
+import {Ingredient} from "../../models/Ingredient";
 
 @Component({
   selector: 'app-create-dish',
@@ -40,7 +42,7 @@ export class CreateDishComponent implements OnInit {
       quantity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
       price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+([.][0-9]{1,2})?$")]),
       description: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      image: ['', Validators.required]
+      image: ['']
     });
   }
 
@@ -91,19 +93,20 @@ export class CreateDishComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.dishForm.valid) {
-      alert('Form Submitted succesfully!!!\n Check the values in browser console.');
-      console.table(this.dishForm.value);
+      let dish = new Dish();
+      dish.name = this.dishForm.get('name')?.value;
+      dish.dishCuisine = new DishCuisine(this.dishForm.get('dishCuisine')?.value);
+      dish.dishCategory = new DishCategory(this.dishForm.get('dishCategory')?.value);
+      dish.ingredients = this.ingredients.controls.map(ingredient => new Ingredient(ingredient.value));
+      dish.quantity = this.dishForm.get('quantity')?.value;
+      dish.price = this.dishForm.get('price')?.value;
+      dish.description = this.dishForm.get('description')?.value;
+      dish.images = [new Image("https://images.pexels.com/photos/6940997/pexels-photo-6940997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")];
+      this.submitted = false;
+      this.dishForm.reset();
+      this.dishService.createDish(dish).subscribe();
     }
-    // let dish = new Dish();
-    // dish.name = this.dishForm.get('name')?.value;
-    // dish.dishCuisine = this.dishForm.get('cuisine_type')?.value;
-    // dish.dishCategory = this.dishForm.get('dish_type')?.value;
-    // dish.ingredients = this.dishForm.get('ingredients')?.value;
-    // dish.quantity = this.dishForm.get('amount')?.value;
-    // dish.price = this.dishForm.get('price')?.value;
-    // dish.description = this.dishForm.get('description')?.value;
-    // dish.images.push(this.dishForm.get('image')?.value);
-    // this.dishService.createDish(dish).subscribe();
+
     //
     // this.dishService.findAll().subscribe(dishes => console.log(dishes));
   }

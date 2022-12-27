@@ -11,9 +11,6 @@ export class FilterPipePipe implements PipeTransform {
     if (!dishes) {
       return [];
     }
-    console.log(min_price);
-    console.log(max_price);
-
     return dishes
       .filter(dish =>  dishCuisines.length == 0 ? true : dishCuisines.includes(dish.dishCuisine.name))
       .filter(dish => (dish.price >= min_price) && (dish.price <= max_price))

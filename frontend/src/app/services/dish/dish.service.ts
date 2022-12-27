@@ -43,6 +43,7 @@ export class DishService {
 
   deleteDish(id: number): Observable<Dish> {
     const url = `${this.dishesUrl}/${id}`;
+    console.log(url);
     return this.http.delete<Dish>(url, this.httpOptions);
   }
 }
