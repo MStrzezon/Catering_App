@@ -42,13 +42,13 @@ public class Dish {
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     private Set<Image> images;
 
     @Column(length = 1000)
     private String description;
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CartItem> cartItems;
 }

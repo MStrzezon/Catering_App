@@ -42,7 +42,7 @@ public class DishController {
         return repository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
     }
 
-    @PutMapping("dishes/{id}")
+    @PutMapping("/dishes/{id}")
     Dish replaceDish(@RequestBody Dish newDish, @PathVariable Long id) {
         return repository.findById(id)
                 .map(dish -> {
@@ -63,4 +63,9 @@ public class DishController {
                 });
     }
 
+    @CrossOrigin
+    @DeleteMapping("/dishes/{id}")
+    void removeDish(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
 }

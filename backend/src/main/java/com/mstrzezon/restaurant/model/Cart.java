@@ -28,6 +28,6 @@ public class Cart {
     private BigDecimal subTotal;
 
     @OneToMany(mappedBy = "cart")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Set<CartItem> cartItems;
 }

@@ -1,38 +1,42 @@
 package com.mstrzezon.restaurant.controller;
 
-import com.mstrzezon.restaurant.exception.CartNotFoundException;
 import com.mstrzezon.restaurant.model.Cart;
 import com.mstrzezon.restaurant.model.CartItem;
-import com.mstrzezon.restaurant.repository.CartRepository;
+import com.mstrzezon.restaurant.service.CartService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 public class CartController {
 
-    private CartRepository repository;
+    private final CartService cartService;
 
-    CartController(CartRepository cartRepository) {
-        this.repository = cartRepository;
+    CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
+    @GetMapping("/carts/{id}/items")
+    Set<CartItem> getCartItems(@PathVariable Long id) {
+        return cartService.getCartItems(id);
     }
 
-    @GetMapping("/carts/{id}")
-    Cart cart(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(() -> new CartNotFoundException(id));
+    @GetMapping("carts/{id}/number-of-servings")
+    Integer numberOfServings(@PathVariable Long id, @RequestParam Long dishId) {
+        return cartService.numberOfServings(id, dishId);
     }
 
     @PostMapping("/carts")
     Cart newCart(@RequestBody Cart newCart) {
-        return repository.save(newCart);
+        return cartService.createCart(newCart);
     }
 
     @PostMapping("/carts/{id}/add-item")
-    Cart addCartItem(@PathVariable Long id, @RequestParam CartItem cartItem) {
-        return repository.findById(id)
-                .map(cart -> {
-                    cart.getCartItems().add(cartItem);
-                    cart.setCartItems(cart.getCartItems());
-                    return repository.save(cart);
-                })
-                .orElseThrow(() -> new CartNotFoundException(id));
+    Set<CartItem> addCartItem(@PathVariable Long id, @RequestParam Long dishId, @RequestParam Integer quantity) {
+        return cartService.addDishToCart(id, dishId, quantity);
+    }
+
+    @PostMapping("/carts/{id}/remove-item")
+    void removeCartItem(@PathVariable Long id, @RequestParam Long dishId, @RequestParam Integer quantity) {
+        cartService.removeDishFromCart(id, dishId, quantity);
     }
 }
