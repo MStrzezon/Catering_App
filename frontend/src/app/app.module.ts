@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
+import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import {MatIconModule} from "@angular/material/icon";
     FilterPipePipe,
     FilterBoxComponent,
     CartComponent,
-    NavbarComponent
+    NavbarComponent,
+    DishDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +51,7 @@ import {MatIconModule} from "@angular/material/icon";
     MatCardModule,
     MatListModule,
     MatIconModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

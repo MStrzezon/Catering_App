@@ -106,8 +106,5 @@ export class CreateDishComponent implements OnInit {
       this.dishForm.reset();
       this.dishService.createDish(dish).subscribe();
     }
-
-    //
-    // this.dishService.findAll().subscribe(dishes => console.log(dishes));
   }
 }

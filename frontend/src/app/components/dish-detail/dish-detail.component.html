@@ -1,0 +1,120 @@
+<div class="dish-info">
+  <a routerLink="..">
+    <button>Powrót</button>
+  </a>
+  <h1>{{dish.name}}</h1>
+  <h4>{{dish.dishCuisine.name}}, {{dish.dishCategory.name}}</h4>
+  <div class="dish-details">
+    <ngb-carousel *ngIf="dish.images" class="col-md-4">
+      <ng-template ngbSlide *ngFor="let image of dish.images">
+        <div class="picsum-img-wrapper">
+          <img [src]="image.imageUrl" alt="{{image.imageId}}"/>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+    <div class="dish-description">
+      <p>{{dish.description}}</p>
+      <div class="second-row">
+        <div class="rating">
+          <div class="rating-info">
+            <div class="disabled">
+              <app-star-rating [rating]="stars"></app-star-rating>
+            </div>
+            <p>{{this.avgRating | number : '1.2-2'}}</p>
+          </div>
+          <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Wystaw ocenę</h4>
+              <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+            </div>
+            <div class="modal-body">
+              <app-star-rating (newItemEvent)="updateRating($event)"></app-star-rating>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save')">Save</button>
+            </div>
+          </ng-template>
+
+          <button class="btn btn-outline-primary" (click)="open(content)">Dodaj/Edytuj ocenę</button>
+        </div>
+        <div class="purchase-section">
+          <div class="quantity-price">
+            <div class="quantity">
+              Liczba dostępny dań: {{dish.quantity}}
+            </div>
+            <div class="price">
+              {{dish.price}}
+              <fa-icon [icon]="faDollar"></fa-icon>
+            </div>
+          </div>
+          <div class="add-to-cart">
+            <input id="portionsNumber" name="portionsNumber" type="number" min="1" max="{{dish.quantity}}" [(ngModel)]="quantity"/>
+            <button (click)="addToCart()">Dodaj do koszyka</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="review-section">
+    <h1>Recenzje:</h1>
+    <div class="reviews" *ngIf="reviews">
+      <div class="review" *ngFor="let review of reviews">
+        <div class="review-owner">
+          <h3>{{review.nick}}</h3>
+          <p>{{review.userName}}</p>
+        </div>
+        <div class="purchase-date" *ngIf="review.purchaseDate != null">Data
+          zakupu: {{review.purchaseDate.toDateString()}}</div>
+        <textarea cdkTextareaAutosize class="comment" readonly>{{review.text}}</textarea>
+      </div>
+    </div>
+
+    <button (click)="addReviewBtnClicked()">{{formHidden ? "Dodaj recenzję" : "Zamknij formularz"}}
+    </button>
+    <div class="container" *ngIf="!formHidden">
+      <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+        <div class="mb-2">
+          <label for="nick">Nick: </label>
+          <input id="nick" type="text" formControlName="nick" class="form-control" required>
+          <div *ngIf="nick.invalid && (nick.dirty || nick.touched || submitted)"
+               class="alert alert-danger">
+            <div *ngIf="nick.errors?.['required']">
+              Nick jest wymagany.
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="username">Name: </label>
+          <input id="username" type="text" formControlName="username" class="form-control" required>
+          <div *ngIf="username.invalid && (username.dirty || username.touched || submitted)"
+               class="alert alert-danger">
+            <div *ngIf="username.errors?.['required']">
+              Nazwa jest wymagana.
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="text">Tekst: </label>
+          <textarea id="text" rows="3" formControlName="text" required class="form-control"></textarea>
+          <div *ngIf="text.invalid && (text.dirty || text.touched || submitted)"
+               class="alert alert-danger">
+            <div *ngIf="text.errors?.['required']">
+              Tekst recenzji jest wymagany.
+            </div>
+            <div *ngIf="text.errors?.['minlength']">
+              Minimalna liczba znaków to 50.
+            </div>
+            <div *ngIf="text.errors?.['maxlength']">
+              Maksymalna liczba znaków to 500.
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="purchaseDate">Data zakupu: </label>
+          <input id="purchaseDate" type="date" class="form-control" formControlName="purchaseDate"/>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </section>
+</div>

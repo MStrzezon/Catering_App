@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -7,10 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class StarRatingComponent {
 
-  @Input() dishId: number;
-
   stars = [1, 2, 3, 4, 5];
-  rating = 0;
+  @Input() rating = 0;
+  @Output() newItemEvent = new EventEmitter<number>();
+
   hoverState = 0;
 
   enter(i: number) {
@@ -23,5 +23,6 @@ export class StarRatingComponent {
 
   updateRating(i: number) {
     this.rating = i;
+    this.newItemEvent.emit(this.rating);
   }
 }

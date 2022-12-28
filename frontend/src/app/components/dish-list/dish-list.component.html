@@ -12,7 +12,7 @@
                [class.most-expensive]="mostExpensiveValue === dish.price && dish.quantity > 3"
                [class.the-cheapest]="cheapestValue === dish.price && dish.quantity > 3">
             <fa-icon class="trash" [icon]="faTrash" (click)="delete(dish)"></fa-icon>
-            <img src="{{dish.images[0].imageUrl}}}" alt="Dish image">
+            <a [routerLink]="['/menu', dish.dishId]"><img src="{{dish.images[0].imageUrl}}}" alt="Dish image"></a>
             <p class="alert">Chwilowy brak dostępnych dań</p>
             <h1>{{dish.name}}</h1>
             <p>{{dish.dishCuisine.name | uppercase}}</p>

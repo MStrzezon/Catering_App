@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Dish} from "../../models/Dish";
 import { map, max, Observable } from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,12 @@ export class DishService {
 
   findAll(): Observable<Dish[]> {
     return this.http.get<Dish[]>(this.dishesUrl);
+  }
+
+  findById(id: number): Observable<Dish> {
+    const url = `${this.dishesUrl}/${id}`;
+
+    return this.http.get<Dish>(url);
   }
 
   createDish(dish: Dish): Observable<Dish> {
@@ -43,7 +49,17 @@ export class DishService {
 
   deleteDish(id: number): Observable<Dish> {
     const url = `${this.dishesUrl}/${id}`;
-    console.log(url);
+
     return this.http.delete<Dish>(url, this.httpOptions);
+  }
+
+  addRating(id:number, rating:number) {
+    const url = `${this.dishesUrl}/${id}/add-rating`;
+
+    let params = new HttpParams();
+    params = params.append('rating', rating);
+    return this.http.post<number>(url, {},{
+      params: params
+    });
   }
 }
