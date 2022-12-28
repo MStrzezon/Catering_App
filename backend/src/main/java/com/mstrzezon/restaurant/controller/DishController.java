@@ -68,4 +68,10 @@ public class DishController {
     void removeDish(@PathVariable Long id) {
         repository.deleteById(id);
     }
+
+    @PostMapping("/dishes/{id}/add-rating")
+    void addRating(@PathVariable Long id, @RequestParam Integer rating) {
+        service.addRating(id, rating);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.mstrzezon.restaurant.service;
 
+import com.mstrzezon.restaurant.exception.DishNotFoundException;
 import com.mstrzezon.restaurant.model.*;
 import com.mstrzezon.restaurant.repository.*;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,16 @@ public class DishService {
         }
 
         return listImages;
+    }
+
+    public void addRating(Long dishId, Integer ratingValue) {
+        Dish dish = dishRepository.findById(dishId).orElseThrow(() -> new DishNotFoundException(dishId));
+        Set<Rating> dishRatings = dish.getRatings();
+        Rating dishRating = new Rating();
+        dishRating.setDish(dish);
+        dishRating.setValue(ratingValue);
+        dishRatings.add(dishRating);
+        dish.setRatings(dishRatings);
+        dishRepository.save(dish);
     }
 }
