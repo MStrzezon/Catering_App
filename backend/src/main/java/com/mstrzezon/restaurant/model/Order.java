@@ -18,9 +18,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "order")
-    @JsonIgnore
-    private Set<OderItem> orderItems;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<OrderItem> orderItems;
 
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;

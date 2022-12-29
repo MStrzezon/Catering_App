@@ -1,5 +1,6 @@
 package com.mstrzezon.restaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +11,13 @@ import java.math.BigDecimal;
 @Table(name = "order_items")
 @Getter
 @Setter
-public class OderItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "dish_id", nullable = false)
     private Dish dish;
 
@@ -26,7 +27,8 @@ public class OderItem {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnore
     private Order order;
 }
