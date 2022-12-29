@@ -35,6 +35,10 @@ export class DishListComponent implements OnInit {
 
   searchMaxPrice: number[] = [];
 
+  pageSize = 10;
+
+  page = 1;
+
   constructor(private dishService: DishService, private cartService: CartService) {
   }
 
@@ -82,5 +86,9 @@ export class DishListComponent implements OnInit {
       this.dishes = this.dishes.filter(d => d !== dish);
       this.dishService.deleteDish(dish.dishId).subscribe();
     }
+  }
+
+  pageSizeChanged(pageSize: number): void {
+    this.pageSize = pageSize;
   }
 }

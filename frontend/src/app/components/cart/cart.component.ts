@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../services/cart/cart.service";
 import {CartItem} from "../../models/CartItem";
+import {OrderService} from "../../services/order/order.service";
 
 @Component({
   selector: 'app-cart',
@@ -9,7 +10,7 @@ import {CartItem} from "../../models/CartItem";
 })
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private orderService: OrderService) {
   }
 
   productInOrders: CartItem[]=[];
@@ -50,7 +51,11 @@ export class CartComponent implements OnInit {
     CartComponent.validateCount(productInOrder);
   }
 
-
+  buy(productInOrder: CartItem) {
+    this.productInOrders = this.productInOrders.filter(d => d !== productInOrder);
+    
+    this.orderService.order([productInOrder]).subscribe(_ => confirm("Produkt został zakupiony"));
+  }
   remove(productInOrder: CartItem) {
     this.productInOrders = this.productInOrders.filter(d => d !== productInOrder);
     this.cartService.removeFromCart(1, productInOrder.dish.dishId, productInOrder.quantity).subscribe();

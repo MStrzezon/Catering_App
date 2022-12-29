@@ -1,38 +1,53 @@
-  <div class="row">
-    <div class="col-sm-3">
-      <app-filter-box [checkedCuisineTypes]="searchCuisineTypes" [checkedDishTypes]="searchDishesTypes"
-                      [checkedRatings]="searchRatings" [searchedMinPrice]="searchMinPrice"
-                      [searchedMaxPrice]="searchMaxPrice"></app-filter-box>
-    </div>
-    <div class="col-sm-9">
-      <div class="row">
-        <div class="col-5 col-md-4 col-lg-3"
-             *ngFor="let dish of (dishes | filterPipe: searchCuisineTypes: searchMinPrice[0]: searchMaxPrice[0]: searchRatings: searchDishesTypes)">
-          <div class="dish-item" [class.warning]="dish.quantity <= 3"
-               [class.most-expensive]="mostExpensiveValue === dish.price && dish.quantity > 3"
-               [class.the-cheapest]="cheapestValue === dish.price && dish.quantity > 3">
-            <fa-icon class="trash" [icon]="faTrash" (click)="delete(dish)"></fa-icon>
-            <a [routerLink]="['/menu', dish.dishId]"><img src="{{dish.images[0].imageUrl}}}" alt="Dish image"></a>
-            <p class="alert">Chwilowy brak dostępnych dań</p>
-            <h1>{{dish.name}}</h1>
-            <p>{{dish.dishCuisine.name | uppercase}}</p>
-            <div class="order-info">
-              <div class="amount">
-                <fa-icon class="add" [class.hidden]="dish.quantity === 0" [icon]="faPlus"
-                         (click)="addItem(dish)"></fa-icon>
-                <p>{{dish.quantity}}</p>
-                <fa-icon class="remove" [icon]="faMinus" (click)="removeItem(dish)"></fa-icon>
-              </div>
-              <div class="price">
-                {{dish.price}}
-                <fa-icon [icon]="faDollar"></fa-icon>
-              </div>
+<div class="row">
+  <div class="col-sm-3">
+    <app-filter-box [checkedCuisineTypes]="searchCuisineTypes" [checkedDishTypes]="searchDishesTypes"
+                    [checkedRatings]="searchRatings" [searchedMinPrice]="searchMinPrice"
+                    [searchedMaxPrice]="searchMaxPrice"></app-filter-box>
+  </div>
+  <div class="col-sm-9">
+    <div class="row">
+      <div class="col-5 col-md-4 col-lg-3"
+           *ngFor="let dish of (dishes | filterPipe: searchCuisineTypes: searchMinPrice[0]: searchMaxPrice[0]: searchRatings: searchDishesTypes) | slice: (page-1) * pageSize : page * pageSize">
+        <div class="dish-item" [class.warning]="dish.quantity <= 3"
+             [class.most-expensive]="mostExpensiveValue === dish.price && dish.quantity > 3"
+             [class.the-cheapest]="cheapestValue === dish.price && dish.quantity > 3">
+          <fa-icon class="trash" [icon]="faTrash" (click)="delete(dish)"></fa-icon>
+          <a [routerLink]="['/menu', dish.dishId]"><img src="{{dish.images[0].imageUrl}}}" alt="Dish image"></a>
+          <p class="alert">Chwilowy brak dostępnych dań</p>
+          <h1>{{dish.name}}</h1>
+          <p>{{dish.dishCuisine.name | uppercase}}</p>
+          <div class="order-info">
+            <div class="amount">
+              <fa-icon class="add" [class.hidden]="dish.quantity === 0" [icon]="faPlus"
+                       (click)="addItem(dish)"></fa-icon>
+              <p>{{dish.quantity}}</p>
+              <fa-icon class="remove" [icon]="faMinus" (click)="removeItem(dish)"></fa-icon>
             </div>
-            <div>
-              Liczba zarezerwowanych dań: {{dish.reserved}}
+            <div class="price">
+              {{dish.price}}
+              <fa-icon [icon]="faDollar"></fa-icon>
             </div>
+          </div>
+          <div>
+            Liczba zarezerwowanych dań: {{dish.reserved}}
           </div>
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <select [ngModel]="pageSize" (ngModelChange)="pageSizeChanged($event)" name="pageSize">
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+          <option [value]="25">25</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="dishes.length"></ngb-pagination>
+      </div>
+    </div>
   </div>
+</div>

@@ -23,6 +23,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import {MatInputModule} from "@angular/material/input";
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatInputModule} from "@angular/material/input";
     FilterBoxComponent,
     CartComponent,
     NavbarComponent,
-    DishDetailComponent
+    DishDetailComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

@@ -4,12 +4,14 @@ import {DishListComponent} from "./components/dish-list/dish-list.component";
 import {CartComponent} from "./components/cart/cart.component";
 import {CreateDishComponent} from "./components/create-dish/create-dish.component";
 import {DishDetailComponent} from "./components/dish-detail/dish-detail.component";
+import {OrdersComponent} from "./components/orders/orders.component";
 
 const routes: Routes = [
   { path: 'menu', component: DishListComponent },
   { path: 'create-dish', component: CreateDishComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'menu/:id', component: DishDetailComponent }
+  { path: 'menu/:id', component: DishDetailComponent },
+  { path: 'orders', component: OrdersComponent }
 ];
 
 @NgModule({
