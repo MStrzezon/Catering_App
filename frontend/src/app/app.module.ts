@@ -24,6 +24,8 @@ import {MatIconModule} from "@angular/material/icon";
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
 import {MatInputModule} from "@angular/material/input";
 import { OrdersComponent } from './components/orders/orders.component';
+import { StartViewComponent } from './components/start-view/start-view.component';
+
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { OrdersComponent } from './components/orders/orders.component';
     CartComponent,
     NavbarComponent,
     DishDetailComponent,
-    OrdersComponent
+    OrdersComponent,
+    StartViewComponent
   ],
   imports: [
     BrowserModule,

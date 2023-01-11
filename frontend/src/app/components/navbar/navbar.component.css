@@ -36,6 +36,13 @@ nav ul li {
   margin: 0 5px
 }
 
+label a {
+  all: unset;
+  cursor: pointer;
+  color: white;
+  text-transform: uppercase;
+}
+
 nav ul li a {
   color: white;
   font-size: 17px;
