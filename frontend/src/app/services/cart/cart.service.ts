@@ -34,7 +34,6 @@ export class CartService {
 
   addToCart(cartId: number, dishId: number, quantity: number): Observable<CartItem[]> {
     const url = `${this.cartUrl}/${cartId}/add-item`;
-    console.log(url);
     let params = new HttpParams();
     params = params.append('dishId', dishId);
     params = params.append('quantity', quantity);

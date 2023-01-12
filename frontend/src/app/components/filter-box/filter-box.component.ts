@@ -19,7 +19,9 @@ export class FilterBoxComponent implements OnInit {
 
   maxPrice: number;
 
-  ratings = [1, 2, 3, 4, 5];
+  minRating: number;
+
+  maxRating: number;
 
   dishCategories: DishCategory[]
 
@@ -29,7 +31,9 @@ export class FilterBoxComponent implements OnInit {
 
   @Input() checkedDishTypes: string[];
 
-  @Input() checkedRatings: number[];
+  @Input() searchedMinRating: number[];
+
+  @Input() searchedMaxRating: number[];
 
   @Input() searchedMinPrice: number[];
 
@@ -43,7 +47,8 @@ export class FilterBoxComponent implements OnInit {
     this.filterForm = this.formBuilder.group({
       cuisineTypes: this.formBuilder.array([]),
       dishTypes: this.formBuilder.array([]),
-      ratings: this.formBuilder.array([]),
+      minRating: '',
+      maxRating: '',
       minPrice: '',
       maxPrice: ''
     });
@@ -60,18 +65,16 @@ export class FilterBoxComponent implements OnInit {
     this.dishService.getMaxPrice().subscribe(maxPrice => {
       this.maxPrice = maxPrice.sort((n1, n2) => n2 - n1)[0]
       this.searchedMaxPrice.push(this.maxPrice);
+      this.minRating = 0;
+      this.maxRating = 5;
+      this.searchedMinRating.push(this.minRating);
+      this.searchedMaxRating.push(this.maxRating);
 
     });
     this.dishCategoryService.findAll().subscribe(dishCategories => {
       this.dishCategories = dishCategories;
       this.addDishTypes()
     });
-    this.addRatings();
-
-  }
-
-  onlyUnique(value: string, index: number, self: string[]) {
-    return self.indexOf(value) === index;
   }
 
   get cuisineTypesFormArray() {
@@ -88,14 +91,6 @@ export class FilterBoxComponent implements OnInit {
 
   private addDishTypes() {
     this.dishCategories.forEach(() => this.dishTypesFormArray.push(new FormControl(false)))
-  }
-
-  get ratingsFormArray() {
-    return this.filterForm.get('ratings') as FormArray;
-  }
-
-  private addRatings() {
-    this.ratings.forEach(() => this.ratingsFormArray.push(new FormControl(false)))
   }
 
   cuisineTypeCheckboxChanged(cuisineTypeIndex: number, e: Event) {
@@ -120,15 +115,12 @@ export class FilterBoxComponent implements OnInit {
     }
   }
 
-  ratingCheckBoxChanged(ratingIndex: number, e: Event) {
-    if (e) {
-      this.checkedRatings.push(this.ratings[ratingIndex]);
-    } else {
-      const index = this.checkedRatings.indexOf(this.ratings[ratingIndex], 0);
-      if (index > -1) {
-        this.checkedRatings.splice(index, 1)
-      }
-    }
+  minRatingChanged() {
+    this.searchedMinRating[0] = this.filterForm.get('minRating')?.value;
+  }
+
+  maxRatingChanged() {
+    this.searchedMaxRating[0] = this.filterForm.get('maxRating')?.value;
   }
 
   minValueChanged() {

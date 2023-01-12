@@ -23,7 +23,6 @@ export class CartComponent implements OnInit {
     } else if (productInOrder.quantity < 1) {
       productInOrder.quantity = 1;
     }
-    console.log(productInOrder.quantity);
   }
 
   ngOnInit() {
@@ -53,7 +52,7 @@ export class CartComponent implements OnInit {
 
   buy(productInOrder: CartItem) {
     this.productInOrders = this.productInOrders.filter(d => d !== productInOrder);
-    
+
     this.orderService.order([productInOrder]).subscribe(_ => confirm("Produkt został zakupiony"));
   }
   remove(productInOrder: CartItem) {

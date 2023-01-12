@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order/order.service";
 import {CartItem} from "../../models/CartItem";
 
@@ -7,7 +7,7 @@ import {CartItem} from "../../models/CartItem";
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit {
   constructor(private orderService: OrderService) {
   }
 

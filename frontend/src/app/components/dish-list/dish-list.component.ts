@@ -29,7 +29,9 @@ export class DishListComponent implements OnInit {
 
   searchDishesTypes: string[] = [];
 
-  searchRatings: number[] = [];
+  searchMinRating: number[] = [];
+
+  searchMaxRating: number[] = [];
 
   searchMinPrice: number[] = [];
 
@@ -51,7 +53,6 @@ export class DishListComponent implements OnInit {
         this.dishes = dishes;
         dishes.forEach(dish => {
           this.cartService.getPortionOfDishInCarts(1, dish.dishId).subscribe(portion => {
-            console.log(portion);
             dish.reserved = portion;
           });
           if (dish.price > this.mostExpensiveValue) {

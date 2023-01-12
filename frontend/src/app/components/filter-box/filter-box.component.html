@@ -13,19 +13,22 @@
       <label for="dishType-{{ i }}">{{dishCategories[i].name}}</label>
     </div>
   </div>
-  <div formArrayName="ratings">
-    <h2>Ocena dania:</h2>
-    <div *ngFor="let rating of ratingsFormArray.controls; let i=index">
-      <input id="rating-{{ i }}" type="checkbox" (ngModelChange)="ratingCheckBoxChanged(i, $event)" [formControlName]="i">
-      <label for="rating-{{ i }}">{{ratings[i]}}</label>
-    </div>
+  <h2>Oceny:</h2>
+  <div class="form-group">
+    <label for="minRating">Minimalna ocena: </label>
+    <input id="minRating" type="number" min="{{this.minRating}}" max="{{this.maxRating}}" value="{{this.minRating}}" (ngModelChange)="minRatingChanged()" formControlName="minRating" class="form-control">
   </div>
   <div class="form-group">
-    <label for="minPrice">Minimum Price: </label>
+    <label for="maxRating">Maksymalna Ocena: </label>
+    <input id="maxRating" type="number" min="{{this.minRating}}" max="{{this.maxRating}}" value="{{this.maxRating}}" (ngModelChange)="maxRatingChanged()" formControlName="maxRating" class="form-control">
+  </div>
+  <h2>Ceny:</h2>
+  <div class="form-group">
+    <label for="minPrice">Minimalna cena: </label>
     <input id="minPrice" type="number" min="{{this.minPrice}}" max="{{this.maxPrice}}" value="{{this.minPrice}}" (ngModelChange)="minValueChanged()" formControlName="minPrice" class="form-control">
   </div>
   <div class="form-group">
-    <label for="maxPrice">Maximum Price: </label>
+    <label for="maxPrice">Maksymalna cena: </label>
     <input id="maxPrice" type="number" min="{{this.minPrice}}" max="{{this.maxPrice}}" value="{{this.maxPrice}}" (ngModelChange)="maxValueChanged()" formControlName="maxPrice" class="form-control">
   </div>
 </form>
