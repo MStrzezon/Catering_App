@@ -2,18 +2,14 @@ package com.mstrzezon.restaurant.security.jwt;
 
 import com.mstrzezon.restaurant.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import java.util.Date;
-
-import static java.util.Objects.nonNull;
 
 @Component
 public class JwtUtils {
@@ -28,18 +24,18 @@ public class JwtUtils {
     @Value("${restaurant.app.jwtCookieName}")
     private String jwtCookie;
 
-    public String getJwtFromCookies(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-        if (nonNull(cookie)) {
-            return cookie.getValue();
-        } else {
-            return null;
-        }
+    public String getJwt(HttpServletRequest request) {
+        String[] authorizationValues = request.getHeader("Authorization").split(" ");
+        return authorizationValues[authorizationValues.length - 1];
+    }
+
+    public String generateJwtToken(UserDetailsImpl userPrincipal) {
+        return generateTokenFromUsername(userPrincipal.getUsername());
     }
 
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        return ResponseCookie.from(jwtCookie, jwt).path("").maxAge(24 * 60 * 60).httpOnly(true).build();
+        return ResponseCookie.from(jwtCookie, jwt).path("").maxAge(24 * 60 * 60).secure(false).build();
     }
 
     public ResponseCookie getCleanJwtCookie() {

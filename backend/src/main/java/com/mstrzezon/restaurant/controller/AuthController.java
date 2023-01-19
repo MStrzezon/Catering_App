@@ -7,6 +7,7 @@ import com.mstrzezon.restaurant.model.User;
 import com.mstrzezon.restaurant.payload.request.LoginRequest;
 import com.mstrzezon.restaurant.payload.request.SignupRequest;
 import com.mstrzezon.restaurant.payload.request.TokenRefreshRequest;
+import com.mstrzezon.restaurant.payload.response.JwtResponse;
 import com.mstrzezon.restaurant.payload.response.MessageResponse;
 import com.mstrzezon.restaurant.payload.response.TokenRefreshResponse;
 import com.mstrzezon.restaurant.payload.response.UserInfoResponse;
@@ -72,17 +73,15 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        String jwtToken = jwtUtils.generateJwtToken(userDetails);
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(userDetails.getId(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles));
+        return ResponseEntity.ok()
+                .body(new JwtResponse(jwtToken, "", userDetails.getId(), userDetails.getUsername(),
+                        userDetails.getEmail(), roles));
     }
 
     @PostMapping("/refreshtoken")
