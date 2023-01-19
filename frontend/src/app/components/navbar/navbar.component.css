@@ -114,3 +114,8 @@ a.active, a:hover {
     left: 0;
   }
 }
+
+.bracket-icon {
+  color: white;
+  cursor: pointer;
+}

@@ -1,5 +1,7 @@
 import {Component } from '@angular/core';
-import { faShoppingCart, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faBars, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {AuthService} from "../../services/auth/auth.service";
+import {first} from "rxjs";
 
 
 @Component({
@@ -13,5 +15,16 @@ export class NavbarComponent {
 
   faBars = faBars;
 
+  faArrowRightFromBracket = faArrowRightFromBracket;
 
+  constructor(private authService: AuthService) {
+  }
+
+  get isLogged() {
+    return this.authService.isUserLogged();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

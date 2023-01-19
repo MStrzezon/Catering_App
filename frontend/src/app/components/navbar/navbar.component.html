@@ -52,5 +52,9 @@
     <li><a routerLink="create-dish">Dodaj danie</a></li>
     <li><a routerLink="orders">Zamówienia</a></li>
     <li><a routerLink="cart"><fa-icon [icon]="faShoppingCart"></fa-icon></a></li>
+    <li *ngIf="!isLogged"><a routerLink="login">Logowanie</a></li>
+    <li *ngIf="!isLogged"><a routerLink="register">Rejestracja</a></li>
+    <li *ngIf="isLogged"><a>Witaj Michał</a></li>
+    <li *ngIf="isLogged"><fa-icon (click)="logout()" [icon]="faArrowRightFromBracket" class="bracket-icon"></fa-icon></li>
   </ul>
 </nav>
