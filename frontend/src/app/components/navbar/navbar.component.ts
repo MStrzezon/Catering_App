@@ -1,7 +1,7 @@
-import {Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { faShoppingCart, faBars, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import {AuthService} from "../../services/auth/auth.service";
-import {first} from "rxjs";
+import {User} from "../../models/User";
 
 
 @Component({
@@ -9,7 +9,7 @@ import {first} from "rxjs";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
   faShoppingCart = faShoppingCart;
 
@@ -17,7 +17,16 @@ export class NavbarComponent {
 
   faArrowRightFromBracket = faArrowRightFromBracket;
 
+  user: User | null;
   constructor(private authService: AuthService) {
+  }
+
+
+  ngOnInit(): void {
+    this.authService.user.subscribe(user => {
+      console.log("subscribe")
+      this.user = user
+    })
   }
 
   get isLogged() {
@@ -27,4 +36,5 @@ export class NavbarComponent {
   logout() {
     this.authService.logout();
   }
+
 }

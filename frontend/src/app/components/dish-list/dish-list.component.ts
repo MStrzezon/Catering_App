@@ -3,6 +3,8 @@ import {DishService} from "../../services/dish/dish.service";
 import {faPlus, faMinus, faDollar, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {Dish} from "../../models/Dish";
 import {CartService} from "../../services/cart/cart.service";
+import {User} from "../../models/User";
+import {TokenStorageService} from "../../services/storage/token-storage.service";
 
 
 @Component({
@@ -40,12 +42,14 @@ export class DishListComponent implements OnInit {
   pageSize = 10;
 
   page = 1;
+  user: User;
 
-  constructor(private dishService: DishService, private cartService: CartService) {
+  constructor(private dishService: DishService, private cartService: CartService, private storageService: TokenStorageService) {
   }
 
   ngOnInit() {
     this.getDishes();
+    this.user = this.storageService.getUser();
   }
 
   getDishes(): void {

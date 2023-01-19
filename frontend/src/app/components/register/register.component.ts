@@ -46,7 +46,6 @@ export class RegisterComponent {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.f['email'].value);
     if (this.registerForm.invalid) {
       return;
     }

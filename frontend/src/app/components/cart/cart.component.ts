@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../services/cart/cart.service";
 import {CartItem} from "../../models/CartItem";
 import {OrderService} from "../../services/order/order.service";
+import {TokenStorageService} from "../../services/storage/token-storage.service";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-cart',
@@ -9,8 +11,9 @@ import {OrderService} from "../../services/order/order.service";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  user: User;
 
-  constructor(private cartService: CartService, private orderService: OrderService) {
+  constructor(private cartService: CartService, private orderService: OrderService, private tokenStorage: TokenStorageService) {
   }
 
   productInOrders: CartItem[]=[];
@@ -26,7 +29,8 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cartService.getCartItems(1).subscribe(prods => {
+    this.user = this.tokenStorage.getUser();
+    this.cartService.getCartItems(this.user.id).subscribe(prods => {
       this.productInOrders = prods;
     });
   }

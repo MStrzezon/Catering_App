@@ -4,6 +4,7 @@ import {TokenStorageService} from "../../services/storage/token-storage.service"
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {first} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -51,8 +52,9 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f['username'].value, this.f['password'].value)
       .pipe(first())
       .subscribe({
-        next: (data) => {
-          this.storageService.saveToken(data?.token as string);
+        next: (user: User) => {
+          this.storageService.saveToken(user?.token as string);
+          this.storageService.saveUser(user);
           // get return url from route parameters or default to '/'
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/menu';
           this.router.navigate([returnUrl]);
