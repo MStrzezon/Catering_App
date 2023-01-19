@@ -52,8 +52,8 @@ export class RegisterComponent {
 
     this.registerInfo = new RegisterInfo();
     this.registerInfo.email = this.f['email'].value;
-    this.registerInfo.name = this.f['name'].value;
-    this.registerInfo.surname = this.f['surname'].value;
+    this.registerInfo.firstName = this.f['name'].value;
+    this.registerInfo.lastName = this.f['surname'].value;
     this.registerInfo.username = this.f['username'].value;
     this.registerInfo.password = this.f['password'].value;
 

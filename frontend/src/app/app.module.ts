@@ -33,6 +33,7 @@ import {authInterceptorProviders} from "./utils/auth-interceptor/auth.intercepto
 import {ErrorInterceptor} from "./utils/error-interceptor/error.interceptor";
 import {JwtInterceptor} from "./utils/jwt-interceptor/jwt.interceptor";
 import {appInitializer} from "./utils/app.initializer";
+import {TokenStorageService} from "./services/storage/token-storage.service";
 
 
 
@@ -70,7 +71,7 @@ import {appInitializer} from "./utils/app.initializer";
     MatInputModule,
   ],
   providers: [
-    // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, TokenStorageService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

@@ -1,11 +1,10 @@
 export class User {
   id: number;
-
-    firstName: string;
+  firstName: string;
   lastName: string;
   username: string;
-  password: string;
   roles: string[];
+  cartId: number;
   token: string;
   refreshToken: string;
 }

@@ -1,7 +1,7 @@
 export class RegisterInfo {
   email: string;
-  name: string;
-  surname: string;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
 }

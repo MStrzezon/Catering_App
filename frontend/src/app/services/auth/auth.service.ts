@@ -38,6 +38,10 @@ export class AuthService {
     return this.tokenStorage.getToken() !== null;
   }
 
+  public initUser(user: User) {
+    this.userSubject.next(user);
+  }
+
   register(registerInfo: RegisterInfo) {
     return this.http.post<User>(`${environment.apiUrl}/auth/signup`, registerInfo, { withCredentials: true });
   }
