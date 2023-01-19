@@ -51,6 +51,6 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 }

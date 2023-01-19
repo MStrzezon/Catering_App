@@ -1,22 +1,18 @@
 package com.mstrzezon.restaurant.controller;
 
 import com.mstrzezon.restaurant.exception.TokenRefreshException;
-import com.mstrzezon.restaurant.model.ERole;
-import com.mstrzezon.restaurant.model.Role;
-import com.mstrzezon.restaurant.model.User;
+import com.mstrzezon.restaurant.model.*;
 import com.mstrzezon.restaurant.payload.request.LoginRequest;
 import com.mstrzezon.restaurant.payload.request.SignupRequest;
 import com.mstrzezon.restaurant.payload.request.TokenRefreshRequest;
 import com.mstrzezon.restaurant.payload.response.JwtResponse;
 import com.mstrzezon.restaurant.payload.response.MessageResponse;
 import com.mstrzezon.restaurant.payload.response.TokenRefreshResponse;
-import com.mstrzezon.restaurant.payload.response.UserInfoResponse;
 import com.mstrzezon.restaurant.repository.RoleRepository;
 import com.mstrzezon.restaurant.repository.UserRepository;
 import com.mstrzezon.restaurant.security.jwt.JwtUtils;
 import com.mstrzezon.restaurant.service.RefreshTokenService;
 import com.mstrzezon.restaurant.service.UserDetailsImpl;
-import com.mstrzezon.restaurant.model.RefreshToken;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -27,8 +23,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,8 +80,16 @@ public class AuthController {
                 .toList();
 
         return ResponseEntity.ok()
-                .body(new JwtResponse(jwtToken, "", userDetails.getId(), userDetails.getUsername(),
-                        userDetails.getEmail(), roles));
+                .body(JwtResponse.builder()
+                        .id(userDetails.getId())
+                        .firstName(userDetails.getFirstName())
+                        .lastName(userDetails.getLastName())
+                        .email(userDetails.getEmail())
+                        .username(userDetails.getUsername())
+                        .token(jwtToken)
+                        .refreshToken("")
+                        .roles(roles)
+                        .cartId(userDetails.getCartId()).build());
     }
 
     @PostMapping("/refreshtoken")
@@ -105,11 +113,17 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse(ROLE_NOT_FOUND));
         }
         User user = new User();
+        Cart cart = new Cart();
+        cart.setSubTotal(new BigDecimal(0));
+        cart.setUser(user);
+        user.setFirstName(signupRequest.getFirstName());
+        user.setLastName(signupRequest.getLastName());
         user.setUsername(signupRequest.getUsername());
         user.setEmail(signupRequest.getEmail());
         user.setPassword(encoder.encode(signupRequest.getPassword()));
+        user.setCart(cart);
 
-        Set<String> strRoles = signupRequest.getRole();
+        Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
         if (isNull(strRoles)) {

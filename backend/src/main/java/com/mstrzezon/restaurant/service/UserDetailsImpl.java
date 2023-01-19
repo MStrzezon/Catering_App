@@ -15,22 +15,25 @@ public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
-    private String username;
-
+    private String firstName;
+    private String lastName;
     private String email;
-
+    private String username;
+    private Long cartId;
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String firstName, String lastName, String email, String username, String password, Collection<? extends GrantedAuthority> authorities, Long cartId) {
         this.id = id;
-        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
+        this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.cartId = cartId;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -38,10 +41,13 @@ public class UserDetailsImpl implements UserDetails {
                 .collect(Collectors.toList());
         return new UserDetailsImpl(
                 user.getId(),
-                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
+                user.getUsername(),
                 user.getPassword(),
-                authorities);
+                authorities,
+                user.getCart().getCartId());
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -52,16 +58,30 @@ public class UserDetailsImpl implements UserDetails {
         return id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public String getEmail() {
         return email;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public String getUsername() {
-        return username;
+    public Long getCartId() {
+        return cartId;
     }
 
     public boolean isAccountNonExpired() {
