@@ -52,7 +52,7 @@
 
 <div *ngIf="productInOrders.length > 0; else empty">
   <h5 style="display: inline;">Total: {{total | currency}}</h5>
-  <button class="btn btn-warning float-right">Checkout</button>
+  <button (click)="buyAll()" class="btn btn-warning float-right">Checkout</button>
 </div>
 <ng-template #empty>
   <h4 class="text-muted text-center">Cart is empty. Go to get something! :)</h4>
