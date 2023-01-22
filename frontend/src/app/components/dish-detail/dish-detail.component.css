@@ -63,9 +63,16 @@ a {
   cursor: pointer;
 }
 
-.picsum-img-wrapper {
+.slider-image {
   height: 400px;
-  object-fit: cover;
+  width: 600px;
+  object-fit: scale-down;
+}
+
+.carousel-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-to-cart input:invalid {

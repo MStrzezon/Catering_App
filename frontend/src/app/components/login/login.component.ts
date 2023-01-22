@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([returnUrl]);
         },
         error: error => {
-          this.error = error;
+          this.error = 'Niepoprawne dane';
           this.loading = false;
         }
       });
