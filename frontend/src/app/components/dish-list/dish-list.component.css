@@ -104,3 +104,12 @@
 .dish-item .price {
   margin-right: 10px;
 }
+
+.hidden {
+  visibility: hidden;
+}
+
+.fa-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

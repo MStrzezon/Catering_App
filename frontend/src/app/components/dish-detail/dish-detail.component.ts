@@ -5,9 +5,13 @@ import {Dish} from "../../models/Dish";
 import {faDollar} from "@fortawesome/free-solid-svg-icons";
 import {Review} from "../../models/Review";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import { NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Rating} from "../../models/Rating";
 import {CartService} from "../../services/cart/cart.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {User} from "../../models/User";
+import {RatingService} from "../../services/rating/rating.service";
+import {ReviewService} from "../../services/review/review.service";
 
 
 @Component({
@@ -36,40 +40,45 @@ export class DishDetailComponent implements OnInit {
 
   quantity = 1;
 
+  user: User | null;
+
+  userRating: number;
+
+  isOrdered: boolean;
 
   constructor(private formBuilder: FormBuilder, private dishService: DishService, private route: ActivatedRoute, private modalService: NgbModal,
-              private cartService: CartService) {
+              private cartService: CartService, private authService: AuthService, private ratingService: RatingService,
+              private reviewService: ReviewService) {
   }
 
   ngOnInit(): void {
-    let review = new Review();
-    review.nick = "Miki";
-    review.userName = "Jan Kowalski";
-    review.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean posuere enim id enim tincidunt, et venenatis lorem tristique. In quis dapibus velit, pulvinar molestie augue. Donec non nulla lacinia, egestas felis a, placerat sapien. Cras eu imperdiet libero, ut accumsan leo. Nam ac neque id urna mollis interdum nec sed orci. Sed non arcu sapien. Cras aliquam auctor lacus, rutrum commodo risus ultricies eu. Sed suscipit lectus risus, ut ultrices nunc tristique at. Quisque ac ex nec purus mattis cursus. Duis odio justo, tincidunt id dictum sit amet, venenatis ut enim. Ut vel sem ullamcorper, ultricies arcu non, cursus magna. Nulla egestas ex ac laoreet pellentesque.";
-    review.purchaseDate = new Date();
-    this.reviews.push(review);
-    review = new Review();
-    review.nick = "Julek";
-    review.userName = "Julian Lewandowski";
-    review.text = "Et venenatis lorem tristique. In quis dapibus velit, pulvinar molestie augue. Cras eu imperdiet libero, ut accumsan leo. Nam ac neque id urna mollis interdum nec sed orci. Sed non arcu sapien. Cras aliquam auctor lacus, rutrum commodo risus ultricies eu. Sed suscipit lectus risus, ut ultrices nunc tristique at. Quisque ac ex nec purus mattis cursus. Duis odio justo, tincidunt id dictum sit amet, venenatis ut enim. Ut vel sem ullamcorper, ultricies arcu non, cursus magna. Nulla egestas ex ac laoreet pellentesque.";
-    review.purchaseDate = new Date();
-    this.reviews.push(review);
+    this.authService.user.subscribe(user => {
+      this.user = user
+    })
 
     this.route.paramMap.subscribe(params => {
       this.dishService.findById(Number.parseInt(<string>params.get('id'))).subscribe(dish => {
         this.dish = dish;
-        this.avgRating = (this.dish.ratings.map(val => val.value).reduce((a, b) => a + b, 0)/this.dish.ratings.length) || 0
+        this.avgRating = (this.dish.ratings.map(val => val.value).reduce((a, b) => a + b, 0) / this.dish.ratings.length) || 0
         this.stars = Math.round(this.avgRating);
+
+        this.reviewService.reviews(this.dish.dishId).subscribe(reviews => {
+          this.reviews = reviews;
+        })
+
+        this.ratingService.getRating(this.user.id, this.dish.dishId).subscribe(ratingValue => {
+          console.log(ratingValue);
+          this.userRating = ratingValue;
+        })
+
+        this.isOrderedByUser();
       });
     });
 
     this.reviewForm = this.formBuilder.group({
-      nick: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required]),
       text: new FormControl('', [Validators.required, Validators.minLength(50), Validators.maxLength(500)]),
       purchaseDate: new FormControl(''),
     });
-
 
   }
 
@@ -93,14 +102,14 @@ export class DishDetailComponent implements OnInit {
     this.submitted = true;
     if (this.reviewForm.valid) {
       let review = new Review();
-      review.nick = this.reviewForm.get('nick')?.value;
-      review.userName = this.reviewForm.get('username')?.value;
+      review.user = this.user;
       review.text = this.reviewForm.get('text')?.value;
       if (this.reviewForm.get('purchaseDate')?.value != null && this.reviewForm.get('purchaseDate')?.value != '') {
         review.purchaseDate = this.reviewForm.get('purchaseDate')?.value;
       }
       this.submitted = false;
       this.reviewForm.reset();
+      this.reviewService.createReview(review).subscribe();
       this.reviews.push(review);
     }
   }
@@ -113,15 +122,27 @@ export class DishDetailComponent implements OnInit {
     this.createdRating = newRating;
   }
 
+  isOrderedByUser() {
+    this.dishService.isOrderedByUser(this.user.id, this.dish.dishId).subscribe(result => {
+      console.log(result);
+      this.isOrdered = result;
+    });
+  }
+
+  saveRating(modal: any) {
+    modal.close('Save');
+    this.ratingService.updateRating(this.user.id, this.dish.dishId, this.createdRating);
+  }
+
   open(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then(
       (result) => {
         if (result === 'Save') {
           this.dishService.addRating(this.dish.dishId, this.createdRating).subscribe();
           let rating = new Rating()
           rating.value = this.createdRating;
           this.dish.ratings.push(rating);
-          this.avgRating = (this.dish.ratings.map(val => val.value).reduce((a, b) => a + b, 0)/this.dish.ratings.length) || 0
+          this.avgRating = (this.dish.ratings.map(val => val.value).reduce((a, b) => a + b, 0) / this.dish.ratings.length) || 0
           this.stars = Math.round(this.avgRating);
         }
       }
@@ -129,7 +150,7 @@ export class DishDetailComponent implements OnInit {
   }
 
   addToCart() {
-    this.cartService.addToCart(1, this.dish.dishId, this.quantity).subscribe();
+    this.cartService.addToCart(this.user.cartId, this.dish.dishId, this.quantity).subscribe();
     this.dish.quantity = this.dish.quantity - this.quantity;
     this.quantity = 1;
     confirm("Danie zostało dodane do koszyka");

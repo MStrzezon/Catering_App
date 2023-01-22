@@ -1,14 +1,14 @@
+import {User} from "./User";
+
 export class Review {
 
   reviewId: number;
 
-  nick: string;
-
-  userName: string;
+  user: User;
 
   text: string;
 
-  purchaseDate: Date;
+  purchaseDate: string;
 
 
 }

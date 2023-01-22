@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Form, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import { Validators } from '@angular/forms';
 import {Dish} from "../../models/Dish";
 import {DishService} from "../../services/dish/dish.service";
@@ -42,7 +42,7 @@ export class CreateDishComponent implements OnInit {
       quantity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
       price: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+([.][0-9]{1,2})?$")]),
       description: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      image: ['']
+      images: this.formBuilder.array([])
     });
   }
 
@@ -82,12 +82,24 @@ export class CreateDishComponent implements OnInit {
     return this.dishForm.get('description') as FormControl;
   }
 
+  get images() {
+    return this.dishForm.get('images') as FormArray;
+  }
+
   addIngredient() {
     this.ingredients.push(this.formBuilder.control('', [Validators.required]));
   }
 
   removeIngredient(i: number) {
     this.ingredients.removeAt(i);
+  }
+
+  addImage() {
+    this.images.push(this.formBuilder.control('', [Validators.required]));
+  }
+
+  removeImage(i: number) {
+    this.images.removeAt(i);
   }
 
   onSubmit(): void {
@@ -101,7 +113,7 @@ export class CreateDishComponent implements OnInit {
       dish.quantity = this.dishForm.get('quantity')?.value;
       dish.price = this.dishForm.get('price')?.value;
       dish.description = this.dishForm.get('description')?.value;
-      dish.images = [new Image("https://images.pexels.com/photos/6940997/pexels-photo-6940997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")];
+      dish.images = this.images.controls.map(image => new Image(image.value));
       this.submitted = false;
       this.dishForm.reset();
       this.dishService.createDish(dish).subscribe();

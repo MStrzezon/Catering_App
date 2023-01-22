@@ -12,7 +12,7 @@ import {RegisterComponent} from "./components/register/register.component";
 
 const routes: Routes = [
   { path: '', component: StartViewComponent },
-  { path: 'menu', component: DishListComponent, canActivate: [AuthGuard] },
+  { path: 'menu', component: DishListComponent},
   { path: 'create-dish', component: CreateDishComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'menu/:id', component: DishDetailComponent, canActivate: [AuthGuard] },

@@ -4,6 +4,7 @@ import {CartItem} from "../../models/CartItem";
 import {OrderService} from "../../services/order/order.service";
 import {TokenStorageService} from "../../services/storage/token-storage.service";
 import {User} from "../../models/User";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,7 @@ import {User} from "../../models/User";
 export class CartComponent implements OnInit {
   user: User;
 
-  constructor(private cartService: CartService, private orderService: OrderService, private tokenStorage: TokenStorageService) {
+  constructor(private cartService: CartService, private orderService: OrderService, private authService: AuthService) {
   }
 
   productInOrders: CartItem[]=[];
@@ -29,8 +30,10 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.tokenStorage.getUser();
-    this.cartService.getCartItems(this.user.id).subscribe(prods => {
+    this.authService.user.subscribe(user => {
+      this.user = user
+    })
+    this.cartService.getCartItems(this.user.cartId).subscribe(prods => {
       this.productInOrders = prods;
     });
   }
@@ -58,9 +61,15 @@ export class CartComponent implements OnInit {
     this.productInOrders = this.productInOrders.filter(d => d !== productInOrder);
 
     this.orderService.order([productInOrder]).subscribe(_ => confirm("Produkt został zakupiony"));
+    this.productInOrders = [];
   }
   remove(productInOrder: CartItem) {
     this.productInOrders = this.productInOrders.filter(d => d !== productInOrder);
-    this.cartService.removeFromCart(1, productInOrder.dish.dishId, productInOrder.quantity).subscribe();
+    this.cartService.removeFromCart(this.user.cartId, productInOrder.dish.dishId, productInOrder.quantity).subscribe();
+  }
+
+  buyAll() {
+    this.orderService.order(this.productInOrders).subscribe(_ => confirm("Koszyk został zakupiony"));
+    this.productInOrders = [];
   }
 }

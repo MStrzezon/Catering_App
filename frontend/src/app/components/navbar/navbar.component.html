@@ -49,12 +49,18 @@
   <ul>
     <li><a routerLink="" class="active">Home</a></li>
     <li><a routerLink="menu">Menu</a></li>
-    <li><a routerLink="create-dish">Dodaj danie</a></li>
-    <li><a routerLink="orders">Zamówienia</a></li>
-    <li><a routerLink="cart"><fa-icon [icon]="faShoppingCart"></fa-icon></a></li>
+    <li
+      *ngIf="isLogged && user!==null && user.roles.includes('ROLE_MANAGER')"><a routerLink="create-dish">Dodaj danie</a></li>
+    <li
+    *ngIf="isLogged && user!==null"><a routerLink="orders">Zamówienia</a></li>
+    <li *ngIf="isLogged && user!==null"><a routerLink="cart">
+      <fa-icon [icon]="faShoppingCart"></fa-icon>
+    </a></li>
     <li *ngIf="!isLogged"><a routerLink="login">Logowanie</a></li>
     <li *ngIf="!isLogged"><a routerLink="register">Rejestracja</a></li>
     <li *ngIf="isLogged && user!==null"><a>Witaj {{user.firstName}}</a></li>
-    <li *ngIf="isLogged"><fa-icon (click)="logout()" [icon]="faArrowRightFromBracket" class="bracket-icon"></fa-icon></li>
+    <li *ngIf="isLogged">
+      <fa-icon (click)="logout()" [icon]="faArrowRightFromBracket" class="bracket-icon"></fa-icon>
+    </li>
   </ul>
 </nav>

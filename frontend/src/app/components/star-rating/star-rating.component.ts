@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class StarRatingComponent {
 
   stars = [1, 2, 3, 4, 5];
-  @Input() rating = 0;
+  @Input() rating;
   @Output() newItemEvent = new EventEmitter<number>();
 
   hoverState = 0;

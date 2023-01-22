@@ -62,4 +62,10 @@ export class DishService {
       params: params
     });
   }
+
+  isOrderedByUser(userId: number, dishId: number) {
+    const url = `http://localhost:8080/user/${userId}/is_ordered/${dishId}`
+
+    return this.http.get<boolean>(url);
+  }
 }

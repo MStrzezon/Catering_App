@@ -28,14 +28,14 @@
               <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
             </div>
             <div class="modal-body">
-              <app-star-rating (newItemEvent)="updateRating($event)"></app-star-rating>
+              <app-star-rating [rating]="userRating" (newItemEvent)="updateRating($event)"></app-star-rating>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save')">Save</button>
+              <button type="button" class="btn btn-outline-dark" (click)="saveRating(modal)">Save</button>
             </div>
           </ng-template>
 
-          <button class="btn btn-outline-primary" (click)="open(content)">Dodaj/Edytuj ocenę</button>
+          <button [disabled]="!isOrdered" class="btn btn-outline-primary" (click)="open(content)">Dodaj/Edytuj ocenę</button>
         </div>
         <div class="purchase-section">
           <div class="quantity-price">
@@ -60,39 +60,23 @@
     <div class="reviews" *ngIf="reviews">
       <div class="review" *ngFor="let review of reviews">
         <div class="review-owner">
-          <h3>{{review.nick}}</h3>
-          <p>{{review.userName}}</p>
+          <h3>{{review.user.username}}</h3>
+          <p>{{review.user.firstName}}</p>
         </div>
         <div class="purchase-date" *ngIf="review.purchaseDate != null">Data
-          zakupu: {{review.purchaseDate.toDateString()}}</div>
-        <textarea cdkTextareaAutosize class="comment" readonly>{{review.text}}</textarea>
+          zakupu: {{review.purchaseDate}}</div>
+        <textarea class="text" matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5">{{review.text}}</textarea>
       </div>
     </div>
 
-    <button (click)="addReviewBtnClicked()">{{formHidden ? "Dodaj recenzję" : "Zamknij formularz"}}
+    <button [disabled]="!isOrdered" (click)="addReviewBtnClicked()">{{formHidden ? "Dodaj recenzję" : "Zamknij formularz"}}
     </button>
     <div class="container" *ngIf="!formHidden">
       <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
-        <div class="mb-2">
-          <label for="nick">Nick: </label>
-          <input id="nick" type="text" formControlName="nick" class="form-control" required>
-          <div *ngIf="nick.invalid && (nick.dirty || nick.touched || submitted)"
-               class="alert alert-danger">
-            <div *ngIf="nick.errors?.['required']">
-              Nick jest wymagany.
-            </div>
-          </div>
-        </div>
-        <div class="mb-2">
-          <label for="username">Name: </label>
-          <input id="username" type="text" formControlName="username" class="form-control" required>
-          <div *ngIf="username.invalid && (username.dirty || username.touched || submitted)"
-               class="alert alert-danger">
-            <div *ngIf="username.errors?.['required']">
-              Nazwa jest wymagana.
-            </div>
-          </div>
-        </div>
         <div class="mb-2">
           <label for="text">Tekst: </label>
           <textarea id="text" rows="3" formControlName="text" required class="form-control"></textarea>

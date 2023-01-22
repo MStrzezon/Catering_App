@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
 import {TokenStorageService} from "../../services/storage/token-storage.service";
@@ -37,7 +37,7 @@ export class RegisterComponent {
       name: ['', Validators.required],
       surname: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -69,5 +69,9 @@ export class RegisterComponent {
           this.loading = false;
         }
       });
+  }
+
+  get password() {
+    return this.registerForm.get('password') as FormControl;
   }
 }

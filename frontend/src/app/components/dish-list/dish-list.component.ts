@@ -5,6 +5,7 @@ import {Dish} from "../../models/Dish";
 import {CartService} from "../../services/cart/cart.service";
 import {User} from "../../models/User";
 import {TokenStorageService} from "../../services/storage/token-storage.service";
+import {AuthService} from "../../services/auth/auth.service";
 
 
 @Component({
@@ -42,14 +43,16 @@ export class DishListComponent implements OnInit {
   pageSize = 10;
 
   page = 1;
-  user: User;
+  user: User | null;
 
-  constructor(private dishService: DishService, private cartService: CartService, private storageService: TokenStorageService) {
+  constructor(private dishService: DishService, private cartService: CartService, private authService: AuthService) {
   }
 
   ngOnInit() {
     this.getDishes();
-    this.user = this.storageService.getUser();
+    this.authService.user.subscribe(user => {
+      this.user = user
+    })
   }
 
   getDishes(): void {
@@ -74,7 +77,8 @@ export class DishListComponent implements OnInit {
     if (dish.quantity > 0) {
       dish.quantity--;
       dish.reserved++;
-      this.cartService.addToCart(1, dish.dishId, 1).subscribe();
+      console.log(this.user?.cartId)
+      this.cartService.addToCart(this.user?.cartId, dish.dishId, 1).subscribe();
     }
   }
 
@@ -82,7 +86,7 @@ export class DishListComponent implements OnInit {
     if (dish.reserved > 0) {
       dish.reserved--;
       dish.quantity++;
-      this.cartService.removeFromCart(1, dish.dishId, 1).subscribe();
+      this.cartService.removeFromCart(this.user?.cartId, dish.dishId, 1).subscribe();
     }
   }
 

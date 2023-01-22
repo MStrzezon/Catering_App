@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CartItem} from "../../models/CartItem";
 import {OrderItem} from "../../models/OrderItem";
+import {Order} from "../../models/Order";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,12 @@ export class OrderService {
     const url = `${this.orderUrl}/${orderId}`;
 
     return this.http.get<OrderItem[]>(url);
+  }
+
+  getOrders(userId: number): Observable<Order[]> {
+    const url = `http://localhost:8080/users/${userId}/orders`;
+
+    return this.http.get<Order[]>(url);
   }
 
   order(cartItem: CartItem[]): Observable<CartItem[]> {
