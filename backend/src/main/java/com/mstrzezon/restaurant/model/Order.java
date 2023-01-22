@@ -1,5 +1,6 @@
 package com.mstrzezon.restaurant.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,5 +23,11 @@ public class Order {
     private Set<OrderItem> orderItems;
 
     @Column(name = "purchase_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime purchaseDate;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 }

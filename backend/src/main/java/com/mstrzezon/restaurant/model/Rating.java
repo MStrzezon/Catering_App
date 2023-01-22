@@ -23,4 +23,9 @@ public class Rating {
     @JoinColumn(name = "dish_id", nullable = false)
     @JsonIgnore
     private Dish dish;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 }

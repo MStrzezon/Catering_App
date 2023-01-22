@@ -20,7 +20,7 @@ public class Image {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "dish_id")
     @JsonIgnore
     private Dish dish;

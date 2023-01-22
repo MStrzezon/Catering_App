@@ -1,14 +1,12 @@
 package com.mstrzezon.restaurant.service;
 
 import com.mstrzezon.restaurant.exception.CartItemNotFound;
+import com.mstrzezon.restaurant.exception.UserNotFound;
 import com.mstrzezon.restaurant.model.Cart;
 import com.mstrzezon.restaurant.model.CartItem;
 import com.mstrzezon.restaurant.model.Order;
 import com.mstrzezon.restaurant.model.OrderItem;
-import com.mstrzezon.restaurant.repository.CartItemRepository;
-import com.mstrzezon.restaurant.repository.CartRepository;
-import com.mstrzezon.restaurant.repository.OrderItemRepository;
-import com.mstrzezon.restaurant.repository.OrderRepository;
+import com.mstrzezon.restaurant.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -27,18 +26,26 @@ public class OrderService {
 
     private CartItemRepository cartItemRepository;
 
+    private UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartItemRepository cartItemRepository) {
+
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, CartItemRepository cartItemRepository,
+                        UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.cartItemRepository = cartItemRepository;
+        this.userRepository = userRepository;
     }
 
     public Set<OrderItem> getOrderItems(Long orderId) {
         return orderRepository.findById(orderId).orElseThrow().getOrderItems();
     }
 
-    public Set<OrderItem> makeAnOrder(List<CartItem> cartItems) {
+    public Set<Order> getOrders(Long userId) {
+        return new HashSet<>(orderRepository.findOrdersByUserId(userId));
+    }
+
+    public Set<OrderItem> makeAnOrder(List<CartItem> cartItems, Long userId) {
         Set<OrderItem> orderItems = new HashSet<>();
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
@@ -49,6 +56,7 @@ public class OrderService {
             cartItemRepository.delete(cartItemRepository.findById(cartItem.getId()).orElseThrow(() -> new CartItemNotFound(cartItem.getId())));
         }
         Order order = new Order();
+        order.setUser(userRepository.findById(userId).orElseThrow(() -> new UserNotFound(userId)));
         order.setOrderItems(orderItems);
         order.setPurchaseDate(LocalDateTime.now());
         orderItems.forEach(orderItem -> orderItem.setOrder(order));

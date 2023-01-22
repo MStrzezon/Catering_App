@@ -63,7 +63,6 @@ public class DishController {
                 });
     }
 
-    @CrossOrigin
     @DeleteMapping("/dishes/{id}")
     void removeDish(@PathVariable Long id) {
         repository.deleteById(id);

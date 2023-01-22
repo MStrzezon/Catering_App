@@ -51,4 +51,8 @@ public class Dish {
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<CartItem> cartItems;
+
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Review> reviews;
 }
